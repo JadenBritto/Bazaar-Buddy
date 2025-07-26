@@ -3,13 +3,127 @@
 
 {% block title %}Vendor Dashboard - BazaarBuddy{% endblock %}
 
+{% block extra_head %}
+<style>
+    .card-hover {
+        transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    .ai-glow {
+        position: relative;
+        overflow: hidden;
+    }
+    .ai-glow::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+        animation: shine 3s infinite;
+    }
+    @keyframes shine {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    .stat-animation {
+        animation: countUp 1s ease-out;
+    }
+    @keyframes countUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block navbar %}
+<nav class="bg-white shadow-lg border-b-2 border-primary-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo and Brand -->
+            <div class="flex items-center space-x-3">
+                <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" 
+                     alt="Bazaar Buddy Logo" 
+                     class="w-8 h-8">
+                <a href="{% url 'vendor_dashboard' %}" class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
+                    Bazaar Buddy — Vendor
+                </a>
+            </div>
+
+            <!-- User Info and Actions -->
+            <div class="flex items-center space-x-4">
+                <!-- User Avatar and Name -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+                        <span class="text-white text-sm font-semibold">
+                            {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:user.username.1|upper|default:"" }}
+                        </span>
+                    </div>
+                    <span class="font-medium text-gray-700">{{ user.first_name|default:user.username }}</span>
+                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
+                        Vendor
+                    </span>
+                </div>
+
+                <!-- Navigation Links -->
+                <a href="#" 
+                   class="text-gray-700 hover:text-primary-600 font-medium transition-colors">
+                    <i class="fas fa-user-edit mr-1"></i>
+                    Profile
+                </a>
+                
+                <a href="{% url 'logout' %}" 
+                   class="text-red-600 hover:text-red-700 font-medium transition-colors">
+                    <i class="fas fa-sign-out-alt mr-1"></i>
+                    Sign Out
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
 {% block content %}
+<div class="min-h-screen bg-gradient-to-br from-primary-50 via-white to-purple-50">
+    <!-- Messages Display -->
+    {% if messages %}
+    <div class="fixed top-4 right-4 z-50 space-y-2">
+        {% for message in messages %}
+            <div class="mb-2 p-4 rounded-lg shadow-lg {% if message.tags == 'success' %}bg-green-500 text-white{% elif message.tags == 'error' %}bg-red-500 text-white{% else %}bg-blue-500 text-white{% endif %} alert-message max-w-sm">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %} mr-2"></i>
+                        <span>{{ message }}</span>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Welcome Section -->
         <div class="mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, {{ user.get_full_name|default:"Vendor" }}!</h2>
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">
+                Welcome back, {{ user.get_full_name|default:user.username }}!
+            </h2>
             <p class="text-gray-600">Here's what's happening with your business today.</p>
+            <div class="mt-2 flex items-center text-sm text-gray-500">
+                <i class="fas fa-store mr-2"></i>
+                <span class="font-semibold">{{ user.userprofile.company_name|default:"Your Food Business" }}</span>
+                <span class="mx-2">•</span>
+                <i class="fas fa-map-marker-alt mr-1"></i>
+                <span>{{ user.userprofile.location|default:"Location not set" }}</span>
+            </div>
         </div>
 
         <!-- AI Suggestions Section -->
@@ -37,7 +151,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-gray-600">Total Orders</p>
-                        <p class="text-3xl font-bold text-gray-900" id="totalOrders">{{ vendor.total_orders|default:"0" }}</p>
+                        <p class="text-3xl font-bold text-gray-900 stat-animation" id="totalOrders">0</p>
                         <p class="text-sm text-green-600 mt-1">+12% from last month</p>
                     </div>
                     <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -50,7 +164,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-gray-600">Revenue</p>
-                        <p class="text-3xl font-bold text-gray-900">₹{{ vendor.total_revenue|default:"0"|floatformat:0 }}</p>
+                        <p class="text-3xl font-bold text-gray-900 stat-animation" id="totalRevenue">₹0</p>
                         <p class="text-sm text-green-600 mt-1">+8% from last month</p>
                     </div>
                     <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -63,8 +177,8 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-gray-600">Active Suppliers</p>
-                        <p class="text-3xl font-bold text-gray-900">{{ vendor.active_suppliers|default:"0" }}</p>
-                        <p class="text-sm text-blue-600 mt-1">{{ vendor.new_suppliers|default:"0" }} new this month</p>
+                        <p class="text-3xl font-bold text-gray-900 stat-animation" id="activeSuppliers">0</p>
+                        <p class="text-sm text-blue-600 mt-1"><span id="newSuppliers">0</span> new this month</p>
                     </div>
                     <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
                         <i class="fas fa-truck text-yellow-600 text-xl"></i>
@@ -76,9 +190,9 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm font-medium text-gray-600">Avg Rating</p>
-                        <p class="text-3xl font-bold text-gray-900">{{ vendor.rating|default:"4.5"|floatformat:1 }}</p>
+                        <p class="text-3xl font-bold text-gray-900 stat-animation" id="avgRating">4.5</p>
                         <div class="flex items-center mt-1">
-                            <div class="flex text-yellow-400 text-sm">
+                            <div class="flex text-yellow-400 text-sm" id="ratingStars">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -99,10 +213,10 @@
             <div class="bg-white rounded-xl shadow-md p-6">
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-semibold text-gray-900">Revenue Overview</h3>
-                    <select class="text-sm border border-gray-300 rounded-lg px-3 py-1">
-                        <option>Last 7 days</option>
-                        <option>Last 30 days</option>
-                        <option>Last 3 months</option>
+                    <select class="text-sm border border-gray-300 rounded-lg px-3 py-1" id="revenueTimeframe">
+                        <option value="7">Last 7 days</option>
+                        <option value="30">Last 30 days</option>
+                        <option value="90">Last 3 months</option>
                     </select>
                 </div>
                 <div class="h-64 relative">
@@ -151,20 +265,23 @@
                         </thead>
                         <tbody id="recentOrdersTable">
                             {% for order in recent_orders %}
-                            <tr class="border-b border-gray-100">
+                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                                 <td class="py-3 text-sm font-medium text-gray-900">#{{ order.id }}</td>
-                                <td class="py-3 text-sm text-gray-600">{{ order.supplier.name }}</td>
-                                <td class="py-3 text-sm text-gray-600">{{ order.items.count }} items</td>
-                                <td class="py-3 text-sm font-medium text-gray-900">₹{{ order.total_amount }}</td>
+                                <td class="py-3 text-sm text-gray-600">{{ order.supplier.name|default:"N/A" }}</td>
+                                <td class="py-3 text-sm text-gray-600">{{ order.items.count|default:"0" }} items</td>
+                                <td class="py-3 text-sm font-medium text-gray-900">₹{{ order.total_amount|default:"0" }}</td>
                                 <td class="py-3">
                                     <span class="px-2 py-1 text-xs rounded-full {% if order.status == 'completed' %}bg-green-100 text-green-800{% elif order.status == 'pending' %}bg-yellow-100 text-yellow-800{% else %}bg-red-100 text-red-800{% endif %}">
-                                        {{ order.get_status_display }}
+                                        {{ order.get_status_display|default:order.status|capfirst }}
                                     </span>
                                 </td>
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="5" class="py-8 text-center text-gray-500">No recent orders found</td>
+                                <td colspan="5" class="py-8 text-center text-gray-500">
+                                    <i class="fas fa-clipboard-list text-gray-300 text-3xl mb-2 block"></i>
+                                    No recent orders found
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -180,19 +297,19 @@
                 </div>
                 <div class="space-y-4" id="topSuppliers">
                     {% for supplier in top_suppliers %}
-                    <div class="flex items-center space-x-3">
+                    <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
                         <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
                             {{ forloop.counter }}
                         </div>
                         <div class="flex-1">
                             <p class="text-sm font-medium text-gray-900">{{ supplier.name }}</p>
-                            <p class="text-xs text-gray-500">{{ supplier.order_count }} orders</p>
+                            <p class="text-xs text-gray-500">{{ supplier.order_count|default:"0" }} orders</p>
                         </div>
                         <div class="text-right">
-                            <p class="text-sm font-medium text-gray-900">₹{{ supplier.total_amount|floatformat:0 }}</p>
+                            <p class="text-sm font-medium text-gray-900">₹{{ supplier.total_amount|default:"0"|floatformat:0 }}</p>
                             <div class="flex text-yellow-400 text-xs">
-                                {% for i in "12345"|make_list%}
-                                    {% if forloop.counter <= supplier.rating %}
+                                {% for i in "12345"|make_list %}
+                                    {% if forloop.counter <= supplier.rating|default:4 %}
                                         <i class="fas fa-star"></i>
                                     {% else %}
                                         <i class="far fa-star"></i>
@@ -202,7 +319,10 @@
                         </div>
                     </div>
                     {% empty %}
-                    <p class="text-gray-500 text-center py-4">No suppliers found</p>
+                    <div class="text-center py-8">
+                        <i class="fas fa-truck text-gray-300 text-3xl mb-2"></i>
+                        <p class="text-gray-500 text-sm">No suppliers found</p>
+                    </div>
                     {% endfor %}
                 </div>
             </div>
@@ -212,174 +332,194 @@
         <div class="mt-8 bg-white rounded-xl shadow-md p-6">
             <h3 class="text-lg font-semibold text-gray-900 mb-6">Quick Actions</h3>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <button class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition-all">
+                <button onclick="navigateToPlaceOrder()" class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition-all">
                     <i class="fas fa-plus-circle text-2xl text-indigo-600 mb-2"></i>
                     <span class="text-sm font-medium text-gray-700">Place Order</span>
                 </button>
-                <button class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-green-500 hover:bg-green-50 transition-all">
+                <button onclick="navigateToFindSuppliers()" class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-green-500 hover:bg-green-50 transition-all">
                     <i class="fas fa-search text-2xl text-green-600 mb-2"></i>
                     <span class="text-sm font-medium text-gray-700">Find Suppliers</span>
                 </button>
-                <button class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all">
+                <button onclick="navigateToAnalytics()" class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all">
                     <i class="fas fa-chart-line text-2xl text-yellow-600 mb-2"></i>
                     <span class="text-sm font-medium text-gray-700">View Analytics</span>
                 </button>
-                <button class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all">
+                <button onclick="navigateToSettings()" class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all">
                     <i class="fas fa-cog text-2xl text-purple-600 mb-2"></i>
                     <span class="text-sm font-medium text-gray-700">Settings</span>
                 </button>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // Sample data - replace with Django context variables
-        const sampleData = {
-            totalOrders: 156,
-            totalRevenue: 45000,
-            activeSuppliers: 12,
-            rating: 4.5,
-            recentOrders: [
-                { id: '001', supplier: 'Fresh Veggies Co.', items: 5, amount: 2400, status: 'completed' },
-                { id: '002', supplier: 'Spice Masters', items: 8, amount: 1800, status: 'pending' },
-                { id: '003', supplier: 'Grain Suppliers', items: 3, amount: 3200, status: 'completed' }
-            ],
-            topSuppliers: [
-                { name: 'Fresh Veggies Co.', orders: 23, amount: 12000, rating: 5 },
-                { name: 'Spice Masters', orders: 18, amount: 9800, rating: 4 },
-                { name: 'Grain Suppliers', orders: 15, amount: 8500, rating: 5 }
-            ]
-        };
+<script>
+    // Sample data - replace with Django context variables
+    const sampleData = {
+        totalOrders: 156,
+        totalRevenue: 45000,
+        activeSuppliers: 12,
+        newSuppliers: 3,
+        rating: 4.5,
+        recentOrders: [
+            { id: '001', supplier: 'Fresh Veggies Co.', items: 5, amount: 2400, status: 'completed' },
+            { id: '002', supplier: 'Spice Masters', items: 8, amount: 1800, status: 'pending' },
+            { id: '003', supplier: 'Grain Suppliers', items: 3, amount: 3200, status: 'completed' }
+        ],
+        topSuppliers: [
+            { name: 'Fresh Veggies Co.', orders: 23, amount: 12000, rating: 5 },
+            { name: 'Spice Masters', orders: 18, amount: 9800, rating: 4 },
+            { name: 'Grain Suppliers', orders: 15, amount: 8500, rating: 5 }
+        ]
+    };
 
-        // Initialize Charts
-        function initCharts() {
-            // Revenue Chart
-            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-            new Chart(revenueCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                    datasets: [{
-                        label: 'Revenue (₹)',
-                        data: [3200, 4100, 3800, 5200, 4400, 6100, 5800],
+    // Store chart instances
+    let revenueChart, ordersChart;
+
+    // Initialize Charts
+    function initCharts() {
+        // Revenue Chart
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        revenueChart = new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Revenue (₹)',
+                    data: [3200, 4100, 3800, 5200, 4400, 6100, 5800],
+                    borderColor: '#6366f1',
+                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: '#6366f1',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: 'white',
+                        bodyColor: 'white',
                         borderColor: '#6366f1',
-                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
-                        tension: 0.4,
-                        fill: true,
-                        pointRadius: 4,
-                        pointHoverRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            titleColor: 'white',
-                            bodyColor: 'white',
-                            borderColor: '#6366f1',
-                            borderWidth: 1
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            },
-                            ticks: {
-                                callback: function(value) {
-                                    return '₹' + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
+                        borderWidth: 1,
+                        cornerRadius: 8,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                return 'Revenue: ₹' + context.parsed.y.toLocaleString();
                             }
                         }
-                    },
-                    interaction: {
-                        intersect: false,
-                        mode: 'index'
                     }
-                }
-            });
-
-            // Orders Chart
-            const ordersCtx = document.getElementById('ordersChart').getContext('2d');
-            new Chart(ordersCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                    datasets: [{
-                        label: 'Total Orders',
-                        data: [12, 15, 18, 22, 19, 25, 23],
-                        backgroundColor: '#6366f1',
-                        borderRadius: 4
-                    }, {
-                        label: 'Completed Orders',
-                        data: [10, 13, 16, 20, 17, 23, 21],
-                        backgroundColor: '#10b981',
-                        borderRadius: 4
-                    }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '₹' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
                             display: false
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            titleColor: 'white',
-                            bodyColor: 'white'
                         }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    },
-                    interaction: {
-                        intersect: false,
-                        mode: 'index'
                     }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
                 }
-            });
-        }
+            }
+        });
 
-        // AI Suggestions using Gemini API
-        async function getAISuggestions() {
-            const suggestionsDiv = document.getElementById('aiSuggestions');
-            suggestionsDiv.innerHTML = '<div class="bg-white bg-opacity-10 rounded-lg p-4"><p class="text-sm opacity-90"><i class="fas fa-spinner fa-spin mr-2"></i>Getting fresh insights from AI...</p></div>';
+        // Orders Chart
+        const ordersCtx = document.getElementById('ordersChart').getContext('2d');
+        ordersChart = new Chart(ordersCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Total Orders',
+                    data: [12, 15, 18, 22, 19, 25, 23],
+                    backgroundColor: '#6366f1',
+                    borderRadius: 4,
+                    borderSkipped: false,
+                }, {
+                    label: 'Completed Orders',
+                    data: [10, 13, 16, 20, 17, 23, 21],
+                    backgroundColor: '#10b981',
+                    borderRadius: 4,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: 'white',
+                        bodyColor: 'white',
+                        cornerRadius: 8
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                }
+            }
+        });
+    }
 
-            try {
-                // Your Gemini API key - replace with actual key
-                const API_KEY = 'AIzaSyAj9NCp0-9909MPLfds93gsO_gANOITjQQ'; // Replace with your actual API key
-                
-                const vendorData = {
-                    totalOrders: sampleData.totalOrders,
-                    revenue: sampleData.totalRevenue,
-                    suppliers: sampleData.activeSuppliers,
-                    rating: sampleData.rating,
-                    businessType: 'Street Food Vendor'
-                };
+    // AI Suggestions using Gemini API
+    async function getAISuggestions() {
+        const suggestionsDiv = document.getElementById('aiSuggestions');
+        suggestionsDiv.innerHTML = '<div class="bg-white bg-opacity-10 rounded-lg p-4"><p class="text-sm opacity-90"><i class="fas fa-spinner fa-spin mr-2"></i>Getting fresh insights from AI...</p></div>';
 
-                const prompt = `You are a business consultant for street food vendors in India. Analyze this vendor's performance:
+        try {
+            // Your Gemini API key - replace with actual key
+            const API_KEY = 'YOUR_GEMINI_API_KEY_HERE'; // Replace with your actual API key
+            
+            const vendorData = {
+                totalOrders: sampleData.totalOrders,
+                revenue: sampleData.totalRevenue,
+                suppliers: sampleData.activeSuppliers,
+                rating: sampleData.rating,
+                businessType: 'Street Food Vendor',
+                userName: '{{ user.first_name|default:user.username }}',
+                location: '{{ user.userprofile.location|default:"Not specified" }}'
+            };
+
+            const prompt = `You are a business consultant for street food vendors in India. Analyze this vendor's performance:
 
 Business Metrics:
 - Total Orders this month: ${vendorData.totalOrders}
@@ -387,6 +527,7 @@ Business Metrics:
 - Active Suppliers: ${vendorData.suppliers}
 - Customer Rating: ${vendorData.rating}/5.0
 - Business Type: ${vendorData.businessType}
+- Location: ${vendorData.location}
 
 Provide exactly 3 actionable business recommendations. Each recommendation should:
 1. Be specific and implementable
@@ -396,139 +537,180 @@ Provide exactly 3 actionable business recommendations. Each recommendation shoul
 
 Format each suggestion as a separate line starting with an emoji.`;
 
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: prompt
-                            }]
-                        }],
-                        generationConfig: {
-                            temperature: 0.7,
-                            topK: 40,
-                            topP: 0.95,
-                            maxOutputTokens: 1024,
-                        }
-                    })
-                });
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: prompt
+                        }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        topK: 40,
+                        topP: 0.95,
+                        maxOutputTokens: 1024,
+                    }
+                })
+            });
 
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.status}`);
-                }
-
-                const data = await response.json();
-                
-                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                    const aiText = data.candidates[0].content.parts[0].text;
-                    const suggestions = aiText.split('\n').filter(s => s.trim() && s.length > 10);
-                    displaySuggestions(suggestions);
-                } else {
-                    throw new Error('Invalid API response structure');
-                }
-            } catch (error) {
-                console.error('Gemini API Error:', error);
-                showAPIError();
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status}`);
             }
-        }
 
-        function showAPIError() {
-            const suggestionsDiv = document.getElementById('aiSuggestions');
-            suggestionsDiv.innerHTML = `
-                <div class="bg-red-100 bg-opacity-20 border border-red-300 border-opacity-30 rounded-lg p-4">
-                    <div class="flex items-center mb-2">
-                        <i class="fas fa-exclamation-triangle text-yellow-300 mr-2"></i>
-                        <p class="text-sm font-medium">AI Service Temporarily Unavailable</p>
-                    </div>
-                    <p class="text-xs opacity-80 mb-3">Please check your Gemini API key or try again later.</p>
-                    <button onclick="getAISuggestions()" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-1 rounded text-xs transition-all">
-                        <i class="fas fa-refresh mr-1"></i>Retry
-                    </button>
-                </div>
-            `;
-        }
-
-        function displaySuggestions(suggestions) {
-            const suggestionsDiv = document.getElementById('aiSuggestions');
+            const data = await response.json();
             
-            if (suggestions.length === 0) {
-                suggestionsDiv.innerHTML = `
-                    <div class="bg-white bg-opacity-10 rounded-lg p-4">
-                        <p class="text-sm opacity-90">No suggestions available at the moment. Please try again.</p>
-                    </div>
-                `;
-                return;
+            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                const aiText = data.candidates[0].content.parts[0].text;
+                const suggestions = aiText.split('\n').filter(s => s.trim() && s.length > 10);
+                displaySuggestions(suggestions);
+            } else {
+                throw new Error('Invalid API response structure');
             }
+        } catch (error) {
+            console.error('Gemini API Error:', error);
+            showFallbackSuggestions();
+        }
+    }
 
-            suggestionsDiv.innerHTML = suggestions.slice(0, 3).map((suggestion, index) => 
-                `<div class="bg-white bg-opacity-10 rounded-lg p-4 hover:bg-opacity-20 transition-all cursor-pointer mb-3 last:mb-0">
-                    <div class="flex items-start space-x-3">
-                        <div class="w-6 h-6 bg-white bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <span class="text-xs font-bold">${index + 1}</span>
-                        </div>
-                        <p class="text-sm leading-relaxed">${suggestion.trim()}</p>
-                    </div>
-                </div>`
-            ).join('');
+    function showFallbackSuggestions() {
+        const suggestions = [
+            "🍽️ Consider expanding your menu with seasonal ingredients to attract more customers and increase average order value by 15-20%",
+            "📱 Implement a digital ordering system to reduce wait times and improve customer satisfaction, potentially boosting repeat customers by 25%",
+            "🤝 Partner with 2-3 reliable local suppliers to ensure consistent ingredient quality and reduce supply chain disruptions during peak seasons"
+        ];
+        displaySuggestions(suggestions);
+    }
+
+    function displaySuggestions(suggestions) {
+        const suggestionsDiv = document.getElementById('aiSuggestions');
+        
+        if (suggestions.length === 0) {
+            showFallbackSuggestions();
+            return;
         }
 
-        // Load sample data for demo
-        function loadSampleData() {
-            // Update stats if elements exist (for demo without Django)
-            const totalOrdersEl = document.getElementById('totalOrders');
-            if (totalOrdersEl && !totalOrdersEl.textContent.includes('{{')) {
-                totalOrdersEl.textContent = sampleData.totalOrders;
-            }
-
-            // Load sample recent orders for demo
-            const tableBody = document.getElementById('recentOrdersTable');
-            if (tableBody && !tableBody.innerHTML.includes('{{')) {
-                tableBody.innerHTML = sampleData.recentOrders.map(order => `
-                    <tr class="border-b border-gray-100">
-                        <td class="py-3 text-sm font-medium text-gray-900">#${order.id}</td>
-                        <td class="py-3 text-sm text-gray-600">${order.supplier}</td>
-                        <td class="py-3 text-sm text-gray-600">${order.items} items</td>
-                        <td class="py-3 text-sm font-medium text-gray-900">₹${order.amount}</td>
-                        <td class="py-3">
-                            <span class="px-2 py-1 text-xs rounded-full ${order.status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
-                                ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                            </span>
-                        </td>
-                    </tr>
-                `).join('');
-            }
-
-            // Load sample top suppliers for demo
-            const suppliersDiv = document.getElementById('topSuppliers');
-            if (suppliersDiv && !suppliersDiv.innerHTML.includes('{{')) {
-                suppliersDiv.innerHTML = sampleData.topSuppliers.map((supplier, index) => `
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                            ${index + 1}
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-sm font-medium text-gray-900">${supplier.name}</p>
-                            <p class="text-xs text-gray-500">${supplier.orders} orders</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-sm font-medium text-gray-900">₹${supplier.amount.toLocaleString()}</p>
-                            <div class="flex text-yellow-400 text-xs">
-                                ${'★'.repeat(supplier.rating)}${'☆'.repeat(5 - supplier.rating)}
-                            </div>
-                        </div>
+        suggestionsDiv.innerHTML = suggestions.slice(0, 3).map((suggestion, index) => 
+            `<div class="bg-white bg-opacity-10 rounded-lg p-4 hover:bg-opacity-20 transition-all cursor-pointer mb-3 last:mb-0">
+                <div class="flex items-start space-x-3">
+                    <div class="w-6 h-6 bg-white bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span class="text-xs font-bold">${index + 1}</span>
                     </div>
-                `).join('');
-            }
+                    <p class="text-sm leading-relaxed">${suggestion.trim()}</p>
+                </div>
+            </div>`
+        ).join('');
+    }
+
+    // Load sample data for demo
+    function loadSampleData() {
+        // Update stats with animation
+        animateNumber('totalOrders', sampleData.totalOrders);
+        animateNumber('totalRevenue', sampleData.totalRevenue, '₹');
+        animateNumber('activeSuppliers', sampleData.activeSuppliers);
+        animateNumber('newSuppliers', sampleData.newSuppliers);
+        
+        // Update rating
+        document.getElementById('avgRating').textContent = sampleData.rating;
+
+        // Load sample recent orders for demo
+        const tableBody = document.getElementById('recentOrdersTable');
+        if (tableBody && tableBody.children.length === 0) {
+            tableBody.innerHTML = sampleData.recentOrders.map(order => `
+                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                    <td class="py-3 text-sm font-medium text-gray-900">#${order.id}</td>
+                    <td class="py-3 text-sm text-gray-600">${order.supplier}</td>
+                    <td class="py-3 text-sm text-gray-600">${order.items} items</td>
+                    <td class="py-3 text-sm font-medium text-gray-900">₹${order.amount.toLocaleString()}</td>
+                    <td class="py-3">
+                        <span class="px-2 py-1 text-xs rounded-full ${order.status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
+                            ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
         }
 
-        // Initialize everything when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            initCharts();
-            loadSampleData();
-            getAISuggestions();
+        // Load sample top suppliers for demo
+        const suppliersDiv = document.getElementById('topSuppliers');
+        if (suppliersDiv && !suppliersDiv.innerHTML.includes('{{') && suppliersDiv.children.length === 0) {
+            suppliersDiv.innerHTML = sampleData.topSuppliers.map((supplier, index) => `
+                <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                    <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                        ${index + 1}
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-900">${supplier.name}</p>
+                        <p class="text-xs text-gray-500">${supplier.orders} orders</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm font-medium text-gray-900">₹${supplier.amount.toLocaleString()}</p>
+                        <div class="flex text-yellow-400 text-xs">
+                            ${'★'.repeat(supplier.rating)}${'☆'.repeat(5 - supplier.rating)}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    }
+
+    // Animate numbers
+    function animateNumber(elementId, targetValue, prefix = '') {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        
+        const startValue = 0;
+        const duration = 1000;
+        const startTime = Date.now();
+        
+        function update() {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            const currentValue = Math.floor(startValue + (targetValue - startValue) * easeOutQuart);
+            
+            element.textContent = prefix + currentValue.toLocaleString();
+            
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+        
+        update();
+    }
+
+
+
+    // Chart timeframe change handler
+    document.addEventListener('DOMContentLoaded', function() {
+        const timeframeSelect = document.getElementById('revenueTimeframe');
+        if (timeframeSelect) {
+            timeframeSelect.addEventListener('change', function() {
+                // Update chart data based on selected timeframe
+                console.log('Timeframe changed to:', this.value);
+                // Implement chart data update logic here
+            });
+        }
+    });
+
+    // Auto-dismiss messages
+    setTimeout(function() {
+        const alerts = document.querySelectorAll('.alert-message');
+        alerts.forEach(alert => {
+            alert.style.transition = 'opacity 0.5s';
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500);
         });
-    </script>
+    }, 5000);
+
+    // Initialize everything when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        initCharts();
+        loadSampleData();
+        getAISuggestions();
+    });
+</script>
 {% endblock %}
