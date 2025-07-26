@@ -88,9 +88,6 @@ def login_view(request):
         email_or_username = request.POST.get('email_or_username', '').strip()
         password = request.POST.get('password', '').strip()
         
-        # Enhanced debugging
-        print(f"DEBUG LOGIN: Attempting login for: '{email_or_username}'")
-        
         # Validation for empty fields
         if not email_or_username or not password:
             messages.error(request, 'Please enter both email/username and password.')
@@ -98,67 +95,37 @@ def login_view(request):
         
         # Try to authenticate with username first
         user = authenticate(request, username=email_or_username, password=password)
-        print(f"DEBUG LOGIN: Username auth result: {user}")
         
         # If that fails, try to find user by email and authenticate with username
         if user is None:
             try:
                 user_obj = User.objects.get(email=email_or_username)
                 user = authenticate(request, username=user_obj.username, password=password)
-                print(f"DEBUG LOGIN: Email auth found user: {user_obj.username}, auth result: {user}")
             except User.DoesNotExist:
-                print(f"DEBUG LOGIN: No user found with email: {email_or_username}")
+                print(f"DEBUG: No user found with email: {email_or_username}")
                 pass
         
         if user is not None:
             auth_login(request, user)
-            print(f"DEBUG LOGIN: User {user.username} successfully logged in")
-            
             try:
                 profile = user.userprofile
-                print(f"DEBUG LOGIN: Found profile - user_type: '{profile.user_type}' (repr: {repr(profile.user_type)})")
+                print(f"DEBUG: User {user.username} logged in with user_type: {profile.user_type}")
                 
-                # Enhanced user type checking with debugging
                 if profile.user_type == 'supplier':
-                    print("DEBUG LOGIN: Redirecting to supplier_dashboard")
                     return redirect('supplier_dashboard')
                 elif profile.user_type == 'regular':
-                    print("DEBUG LOGIN: Redirecting to vendor_dashboard")
                     return redirect('vendor_dashboard')
                 else:
-                    print(f"DEBUG LOGIN: Unknown user type '{profile.user_type}' (length: {len(profile.user_type)})")
-                    # Check for common issues
-                    cleaned_type = profile.user_type.strip().lower()
-                    print(f"DEBUG LOGIN: Cleaned type: '{cleaned_type}'")
-                    
-                    if cleaned_type == 'supplier':
-                        print("DEBUG LOGIN: Found supplier after cleaning, updating and redirecting")
-                        profile.user_type = 'supplier'
-                        profile.save()
-                        return redirect('supplier_dashboard')
-                    elif cleaned_type == 'regular' or cleaned_type == 'vendor':
-                        print("DEBUG LOGIN: Found regular/vendor after cleaning, updating and redirecting")
-                        profile.user_type = 'regular'
-                        profile.save()
-                        return redirect('vendor_dashboard')
-                    else:
-                        messages.error(request, f'Unknown user type: {profile.user_type}. Please contact support.')
-                        return redirect('index')
-                        
+                    messages.error(request, f'Unknown user type: {profile.user_type}')
+                    return redirect('index')
             except UserProfile.DoesNotExist:
-                print(f"DEBUG LOGIN: UserProfile does not exist for user: {user.username}")
-                messages.error(request, 'User profile not found. Please contact support.')
-                return redirect('login')
-            except AttributeError as e:
-                print(f"DEBUG LOGIN: AttributeError accessing userprofile: {e}")
-                messages.error(request, 'Error accessing user profile. Please try again.')
+                messages.error(request, 'User profile not found.')
                 return redirect('login')
         else:
-            print(f"DEBUG LOGIN: Authentication failed for: {email_or_username}")
+            print(f"DEBUG: Authentication failed for: {email_or_username}")
             messages.error(request, 'Invalid email/username or password.')
     
     return render(request, 'user/login.html')
-
 
 
 def logout_view(request):
