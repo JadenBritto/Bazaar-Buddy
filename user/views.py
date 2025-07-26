@@ -113,10 +113,6 @@ def login_view(request):
         email_or_username = request.POST.get('email_or_username', '').strip()
         password = request.POST.get('password', '').strip()
         
-<<<<<<< HEAD
-        # Validation for empty fields
-=======
->>>>>>> 8c336e8dec9589de4fccfe95c4d0e47bc551537b
         if not email_or_username or not password:
             messages.error(request, 'Please enter both email/username and password.')
             return render(request, 'user/login.html')
@@ -130,32 +126,10 @@ def login_view(request):
                 user_obj = User.objects.get(email=email_or_username)
                 user = authenticate(request, username=user_obj.username, password=password)
             except User.DoesNotExist:
-<<<<<<< HEAD
-                print(f"DEBUG: No user found with email: {email_or_username}")
-=======
->>>>>>> 8c336e8dec9589de4fccfe95c4d0e47bc551537b
                 pass
         
         if user is not None:
             auth_login(request, user)
-<<<<<<< HEAD
-            try:
-                profile = user.userprofile
-                print(f"DEBUG: User {user.username} logged in with user_type: {profile.user_type}")
-                
-                if profile.user_type == 'supplier':
-                    return redirect('supplier_dashboard')
-                elif profile.user_type == 'regular':
-                    return redirect('vendor_dashboard')
-                else:
-                    messages.error(request, f'Unknown user type: {profile.user_type}')
-                    return redirect('index')
-            except UserProfile.DoesNotExist:
-                messages.error(request, 'User profile not found.')
-                return redirect('login')
-        else:
-            print(f"DEBUG: Authentication failed for: {email_or_username}")
-=======
             
             try:
                 profile = user.userprofile
@@ -175,7 +149,6 @@ def login_view(request):
                 messages.error(request, 'User profile not found. Please contact support.')
                 return redirect('login')
         else:
->>>>>>> 8c336e8dec9589de4fccfe95c4d0e47bc551537b
             messages.error(request, 'Invalid email/username or password.')
     
     return render(request, 'user/login.html')
