@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BazaarBuddy{% endblock %}</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="font-sans antialiased bg-gradient-to-br from-primary-50 via-white to-purple-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo and Brand -->
+                <div class="flex items-center space-x-3">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" 
+                         alt="Bazaar Buddy Logo" 
+                         class="w-8 h-8">
+                    <a href="{% url 'index' %}" class="text-2xl font-bold text-primary-600 hover:text-primary-700">
+                        Bazaar Buddy
+                    </a>
+                </div>
+
+                <!-- Auth Navigation -->
+                <div class="flex items-center space-x-4">
+                    {% if user.is_authenticated %}
+                        <div class="flex items-center space-x-2">
+                            <span class="text-gray-700">{{ user.username }}</span>
+                            <a href="{% url 'logout' %}" 
+                               class="text-red-600 hover:text-red-700 font-medium transition-colors">
+                                <i class="fas fa-sign-out-alt mr-1"></i>
+                                Sign Out
+                            </a>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" 
+                           class="text-primary-600 hover:text-primary-700 font-medium transition-colors">
+                            <i class="fas fa-sign-in-alt mr-1"></i>
+                            Login
+                        </a>
+                        <a href="{% url 'signup' %}" 
+                           class="bg-primary-600 hover:bg-primary-700 text-white font-medium px-4 py-2 rounded-lg transition-colors">
+                            Sign Up
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% include 'user/footer.html' %}
+
+    <!-- JavaScript -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

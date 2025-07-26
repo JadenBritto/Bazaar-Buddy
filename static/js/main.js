@@ -199,3 +199,49 @@ function showNotification(message, type = 'info') {
         }, 300);
     }, 3000);
 }
+
+ 
+        // Sample data functions
+        function fillSampleSpending() {
+            document.getElementById('id_spending_trend').value = '50000, 52000, 48000, 55000, 58000, 60000';
+        }
+
+        function fillSampleCategories() {
+            document.getElementById('id_categories').value = 'Office Supplies, IT Equipment, Marketing Services, Raw Materials, Logistics';
+        }
+
+        function fillSampleSuppliers() {
+            document.getElementById('id_suppliers').value = 'TechCorp Solutions, Global Office Supply, Marketing Masters, Industrial Materials Inc, Swift Logistics';
+        }
+
+        function fillSampleSavings() {
+            document.getElementById('id_savings').value = '2500, 3000, 2800, 3500, 4000, 4200';
+        }
+
+        // Auto-hide messages after 5 seconds
+        setTimeout(function() {
+            const messages = document.querySelectorAll('.messages .alert');
+            messages.forEach(function(message) {
+                message.style.transition = 'opacity 0.5s ease';
+                message.style.opacity = '0';
+                setTimeout(function() {
+                    message.remove();
+                }, 500);
+            });
+        }, 5000);
+
+        // Form submission with loading state
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form[method="post"]');
+            if (form) {
+                form.addEventListener('submit', function() {
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.innerHTML = '<div class="spinner" style="display: inline-block; width: 20px; height: 20px; margin-right: 10px;"></div>Generating...';
+                        submitBtn.disabled = true;
+                    }
+                });
+            }
+        });
+
+     

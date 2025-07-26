@@ -1,42 +1,34 @@
-import json
+# views.py
+from django.shortcuts import render
 import google.generativeai as genai
-from django.conf import settings
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_http_methods
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
 
-# Configure Gemini API
-genai.configure(api_key=settings.GEMINI_API_KEY)
+# Configure your Gemini API key
+genai.configure(api_key="AIzaSyCo28PDVfKE8ONjWqAz5QzE_IudTd3a27U")
 
-@api_view(['GET'])
-def ping(request):
-    return Response({"status": "Django server is running!"})
+def dailyportion(request):
+    recommendation = None
 
-@api_view(['POST'])
-def generate_ai_report(request):
-    try:
-        data = request.data
-        spending_trend = data.get('spending_trend', [])
-        categories = data.get('categories', [])
-        suppliers = data.get('suppliers', [])
-        savings = data.get('savings', [])
+    if request.method == "POST":
+        item = request.POST.get("item")
+        yesterday_qty = request.POST.get("yesterday_qty")
+        temperature = request.POST.get("temperature")
+        event = request.POST.get("event", "None")
 
         prompt = f"""
-        Analyze this vendor data:
-        Spending Trend: {spending_trend}
-        Categories: {categories}
-        Suppliers: {suppliers}
-        Savings: {savings}
-        Provide 5 actionable insights to optimize cost, improve supplier selection, and maximize profit.
-        """
+You are a food business AI assistant.
 
-        # Call Gemini
+Here is vendor data:
+- Item sold: {item}
+- Quantity sold yesterday: {yesterday_qty} kg
+- Today's temperature: {temperature}°C
+- Local event: {event}
+
+Based on this, suggest the optimal quantity to prepare today.
+Give a range and explain why.
+"""
+
         model = genai.GenerativeModel("gemini-1.5-flash")
         response = model.generate_content(prompt)
-        return Response({"recommendations": response.text.split("\n")})
+        recommendation = response.text
 
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    return render(request, "myapp/dashboard.html", {"recommendation": recommendation})

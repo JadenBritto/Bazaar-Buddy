@@ -82,7 +82,7 @@
                         <label for="email_or_username" class="block text-sm font-medium text-gray-700">Email or Username</label>
                         <div class="mt-1 relative">
                             <input id="email_or_username" name="email_or_username" type="text" required 
-                                   class="appearance-none relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-colors"
+                                   class="appearance-none relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
                                    placeholder="Enter your email or username">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <i class="fas fa-user text-gray-400"></i>
@@ -95,7 +95,7 @@
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <div class="mt-1 relative">
                             <input id="password" name="password" type="password" required 
-                                   class="appearance-none relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-colors"
+                                   class="appearance-none relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
                                    placeholder="Enter your password">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <i class="fas fa-lock text-gray-400"></i>
@@ -122,6 +122,11 @@
                             </a>
                         </div>
                     </div>
+                    
+                    <!-- Add this if you want to pass user type from the URL -->
+                    {% if request.GET.type %}
+                    <input type="hidden" name="user_type" value="{{ request.GET.type }}">
+                    {% endif %}
                     
                     <!-- Submit Button -->
                     <div>
@@ -164,7 +169,7 @@
                     <div class="text-center">
                         <p class="text-sm text-gray-600 mb-4">New to BazaarBuddy?</p>
                         <div class="grid grid-cols-2 gap-3">
-                            <a href="{% url 'signup' %}?type=vendor" class="inline-flex justify-center items-center px-4 py-2 border border-primary-300 text-sm font-medium rounded-md text-primary-700 bg-primary-50 hover:bg-primary-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+                            <a href="{% url 'signup' %}?type=regular" class="inline-flex justify-center items-center px-4 py-2 border border-primary-300 text-sm font-medium rounded-md text-primary-700 bg-primary-50 hover:bg-primary-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
                                 <i class="fas fa-store mr-2"></i>
                                 Join as Vendor
                             </a>
@@ -241,5 +246,16 @@
             emailInput.focus();
         });
     </script>
+    
+    <!-- Messages -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 </body>
 </html>

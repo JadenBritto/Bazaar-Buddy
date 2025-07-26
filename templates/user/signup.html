@@ -80,12 +80,13 @@
                     <label class="block text-sm font-medium text-gray-700 mb-4">Account Type</label>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="relative">
-                            <input type="radio" id="vendor" name="user_type" value="vendor" class="sr-only peer" checked>
-                            <label for="vendor" class="flex flex-col items-center justify-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-primary-600 peer-checked:bg-primary-50 transition-all">
-                                <i class="fas fa-store text-2xl mb-2 text-gray-600 peer-checked:text-primary-600"></i>
-                                <span class="text-sm font-medium text-gray-900">Street Food Vendor</span>
-                                <span class="text-xs text-gray-500 mt-1">Buy ingredients</span>
-                            </label>
+                            <input type="radio" id="vendor" name="user_type" value="regular" class="sr-only peer" checked>
+                                <label for="vendor" class="flex flex-col items-center justify-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-primary-600 peer-checked:bg-primary-50 transition-all">
+                                    <i class="fas fa-store text-2xl mb-2 text-gray-600 peer-checked:text-primary-600"></i>
+                                    <span class="text-sm font-medium text-gray-900">Street Food Vendor</span>
+                                    <span class="text-xs text-gray-500 mt-1">Buy ingredients</span>
+                                </label>
+
                         </div>
                         <div class="relative">
                             <input type="radio" id="supplier" name="user_type" value="supplier" class="sr-only peer">
@@ -107,12 +108,12 @@
                         <div>
                             <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
                             <input id="first_name" name="first_name" type="text" required 
-                                   class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-colors">
+                                   class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors">
                         </div>
                         <div>
                             <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
                             <input id="last_name" name="last_name" type="text" required 
-                                   class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-colors">
+                                   class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors">
                         </div>
                     </div>
                     
@@ -120,7 +121,7 @@
                     <div>
                         <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
                         <input id="username" name="username" type="text" required 
-                               class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-colors"
+                               class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
                                placeholder="Enter a unique username">
                     </div>
                     
@@ -128,7 +129,7 @@
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
                         <input id="email" name="email" type="email" required 
-                               class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-colors"
+                               class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
                                placeholder="Enter your email address">
                     </div>
                     
@@ -136,15 +137,15 @@
                     <div>
                         <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
                         <input id="phone" name="phone" type="tel" required 
-                               class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-colors"
+                               class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
                                placeholder="Enter your phone number">
                     </div>
                     
                     <!-- Business Name (conditionally shown) -->
                     <div id="business_field">
                         <label for="business_name" class="block text-sm font-medium text-gray-700">Business Name</label>
-                        <input id="business_name" name="business_name" type="text" 
-                               class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-colors"
+                        <input id="business_name" name="company_name" type="text"
+                               class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
                                placeholder="Enter your business name">
                     </div>
                     
@@ -152,7 +153,7 @@
                     <div>
                         <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
                         <input id="location" name="location" type="text" required 
-                               class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-colors"
+                               class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
                                placeholder="Enter your city/location">
                     </div>
                     
@@ -161,7 +162,7 @@
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <div class="mt-1 relative">
                             <input id="password" name="password" type="password" required 
-                                   class="appearance-none relative block w-full px-3 py-2 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-colors"
+                                   class="appearance-none relative block w-full px-3 py-2 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
                                    placeholder="Create a strong password">
                             <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePassword('password')">
                                 <i class="fas fa-eye text-gray-400 hover:text-gray-600" id="password-eye"></i>
@@ -177,7 +178,7 @@
                         <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
                         <div class="mt-1 relative">
                             <input id="confirm_password" name="confirm_password" type="password" required 
-                                   class="appearance-none relative block w-full px-3 py-2 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-colors"
+                                   class="appearance-none relative block w-full px-3 py-2 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
                                    placeholder="Confirm your password">
                             <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePassword('confirm_password')">
                                 <i class="fas fa-eye text-gray-400 hover:text-gray-600" id="confirm_password-eye"></i>

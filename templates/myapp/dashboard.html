@@ -1,0 +1,305 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block title %}DailyPortion - Order Suggestion - BazaarBuddy{% endblock %}
+
+{% block extra_head %}
+<style>
+    .suggestion-card {
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .form-card {
+        transition: all 0.3s ease;
+    }
+    .form-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    .input-field {
+        transition: all 0.2s ease;
+    }
+    .input-field:focus {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-primary-50 via-white to-purple-50">
+    <!-- Header Section -->
+    <div class="bg-white shadow-sm border-b">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="py-6">
+                <div class="text-center">
+                    <div class="flex justify-center items-center mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-chart-line text-white text-2xl"></i>
+                        </div>
+                        <h1 class="text-4xl font-bold text-gray-900">
+                            🍉 DailyPortion
+                        </h1>
+                    </div>
+                    <p class="text-xl text-gray-600 mt-2">
+                        AI-Powered Inventory Planning for Smart Suppliers
+                    </p>
+                    <p class="text-sm text-gray-500 mt-1">
+                        Plan your daily quantities with data-driven insights
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Form Section -->
+            <div class="form-card bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+                <div class="text-center mb-6">
+                    <div class="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-calculator text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900">Input Today's Data</h2>
+                    <p class="text-gray-600 text-sm mt-1">Provide details for accurate AI suggestions</p>
+                </div>
+
+                <form method="post" class="space-y-6">
+                    {% csrf_token %}
+                    
+                    <!-- Item Name -->
+                    <div>
+                        <label for="item" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-apple-alt text-green-500 mr-2"></i>
+                            Item Sold
+                        </label>
+                        <input type="text" 
+                               id="item" 
+                               name="item" 
+                               required
+                               placeholder="e.g., watermelon, tomatoes, onions"
+                               class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900 placeholder-gray-500">
+                    </div>
+
+                    <!-- Yesterday's Quantity -->
+                    <div>
+                        <label for="yesterday_qty" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-history text-blue-500 mr-2"></i>
+                            Yesterday's Quantity (kg)
+                        </label>
+                        <input type="number" 
+                               id="yesterday_qty" 
+                               name="yesterday_qty" 
+                               required
+                               step="0.1"
+                               min="0"
+                               placeholder="Enter quantity in kg"
+                               class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900 placeholder-gray-500">
+                    </div>
+
+                    <!-- Temperature -->
+                    <div>
+                        <label for="temperature" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-thermometer-half text-orange-500 mr-2"></i>
+                            Today's Temperature (°C)
+                        </label>
+                        <input type="number" 
+                               id="temperature" 
+                               name="temperature" 
+                               required
+                               min="-10"
+                               max="50"
+                               placeholder="Enter temperature in Celsius"
+                               class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900 placeholder-gray-500">
+                    </div>
+
+                    <!-- Local Event -->
+                    <div>
+                        <label for="event" class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-calendar-alt text-purple-500 mr-2"></i>
+                            Local Event (Optional)
+                        </label>
+                        <input type="text" 
+                               id="event" 
+                               name="event"
+                               placeholder="e.g., college fest, wedding season, holiday"
+                               class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900 placeholder-gray-500">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" 
+                            class="w-full bg-gradient-to-r from-primary-600 to-purple-600 text-white font-bold py-4 px-6 rounded-lg hover:from-primary-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        <i class="fas fa-magic mr-2"></i>
+                        Get AI Suggestion
+                    </button>
+                </form>
+            </div>
+
+            <!-- Tips & Info Section -->
+            <div class="space-y-6">
+                <!-- Tips Card -->
+                <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 border border-green-200">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">
+                        <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+                        Pro Tips
+                    </h3>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+                            Higher temperatures usually increase demand for fresh items
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+                            Local events can significantly boost sales
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+                            Consider seasonal trends and market patterns
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+                            Weekend vs weekday variations matter
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Features Card -->
+                <div class="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">
+                        <i class="fas fa-star text-primary-500 mr-2"></i>
+                        AI Features
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-3 bg-primary-50 rounded-lg">
+                            <i class="fas fa-brain text-primary-600 text-2xl mb-2"></i>
+                            <p class="text-xs font-medium text-gray-700">Smart Analysis</p>
+                        </div>
+                        <div class="text-center p-3 bg-green-50 rounded-lg">
+                            <i class="fas fa-chart-trending-up text-green-600 text-2xl mb-2"></i>
+                            <p class="text-xs font-medium text-gray-700">Demand Prediction</p>
+                        </div>
+                        <div class="text-center p-3 bg-orange-50 rounded-lg">
+                            <i class="fas fa-cloud-sun text-orange-600 text-2xl mb-2"></i>
+                            <p class="text-xs font-medium text-gray-700">Weather Impact</p>
+                        </div>
+                        <div class="text-center p-3 bg-purple-50 rounded-lg">
+                            <i class="fas fa-calendar-day text-purple-600 text-2xl mb-2"></i>
+                            <p class="text-xs font-medium text-gray-700">Event Analysis</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Suggestion Results -->
+        {% if recommendation %}
+        <div class="mt-8">
+            <div class="suggestion-card rounded-xl shadow-2xl p-8 text-white">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-robot text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">
+                        🤖 AI Recommendation
+                    </h3>
+                    <p class="text-white text-opacity-90">
+                        Based on your data and market analysis
+                    </p>
+                </div>
+                
+                <div class="bg-white bg-opacity-10 rounded-lg p-6 backdrop-filter backdrop-blur-sm">
+                    <div class="prose prose-invert max-w-none">
+                        {{ recommendation|linebreaks }}
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                    <button onclick="window.print()" 
+                            class="flex-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200">
+                        <i class="fas fa-print mr-2"></i>
+                        Print Suggestion
+                    </button>
+                    <button onclick="location.reload()" 
+                            class="flex-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200">
+                        <i class="fas fa-redo mr-2"></i>
+                        New Analysis
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Messages Display -->
+{% if messages %}
+<div class="fixed top-4 right-4 z-50">
+    {% for message in messages %}
+        <div class="mb-2 p-4 rounded-lg shadow-lg {% if message.tags == 'success' %}bg-green-500 text-white{% elif message.tags == 'error' %}bg-red-500 text-white{% else %}bg-blue-500 text-white{% endif %} alert-message">
+            <div class="flex items-center">
+                <i class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %} mr-2"></i>
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Auto-hide messages after 5 seconds
+    setTimeout(function() {
+        const alerts = document.querySelectorAll('.alert-message');
+        alerts.forEach(alert => {
+            alert.style.transition = 'opacity 0.5s';
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500);
+        });
+    }, 5000);
+
+    // Form validation
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const inputs = form.querySelectorAll('input[required]');
+        
+        form.addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    isValid = false;
+                    input.classList.add('border-red-500');
+                    input.focus();
+                } else {
+                    input.classList.remove('border-red-500');
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('Please fill in all required fields.');
+            }
+        });
+
+        // Remove error styling on input
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                this.classList.remove('border-red-500');
+            });
+        });
+    });
+
+    // Add some interactive feedback
+    document.querySelectorAll('.input-field').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.querySelector('label').classList.add('text-primary-600');
+        });
+        
+        input.addEventListener('blur', function() {
+            this.parentElement.querySelector('label').classList.remove('text-primary-600');
+        });
+    });
+</script>
+{% endblock %}
