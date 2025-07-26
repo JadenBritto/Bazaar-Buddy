@@ -37,6 +37,24 @@
     </script>
 </head>
 <body class="font-sans antialiased bg-gradient-to-br from-primary-50 via-white to-purple-50 min-h-screen">
+<!-- Messages -->
+{% if messages %}
+<div class="fixed top-4 right-4 z-50 space-y-2">
+    {% for message in messages %}
+    <div class="alert px-4 py-3 rounded-md shadow-lg {% if message.tags == 'error' %}bg-red-100 border border-red-400 text-red-700{% elif message.tags == 'success' %}bg-green-100 border border-green-400 text-green-700{% else %}bg-blue-100 border border-blue-400 text-blue-700{% endif %}">
+        <div class="flex items-center justify-between">
+            <span>{{ message }}</span>
+            <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+
     <!-- Navigation -->
     <nav class="bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -80,16 +98,15 @@
                     <label class="block text-sm font-medium text-gray-700 mb-4">Account Type</label>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="relative">
-                            <input type="radio" id="vendor" name="user_type" value="regular" class="sr-only peer" checked>
-                                <label for="vendor" class="flex flex-col items-center justify-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-primary-600 peer-checked:bg-primary-50 transition-all">
-                                    <i class="fas fa-store text-2xl mb-2 text-gray-600 peer-checked:text-primary-600"></i>
-                                    <span class="text-sm font-medium text-gray-900">Street Food Vendor</span>
-                                    <span class="text-xs text-gray-500 mt-1">Buy ingredients</span>
-                                </label>
-
+                            <input type="radio" id="vendor" name="user_type_radio" value="vendor" class="sr-only peer" checked>
+                            <label for="vendor" class="flex flex-col items-center justify-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-primary-600 peer-checked:bg-primary-50 transition-all">
+                                <i class="fas fa-store text-2xl mb-2 text-gray-600 peer-checked:text-primary-600"></i>
+                                <span class="text-sm font-medium text-gray-900">Street Food Vendor</span>
+                                <span class="text-xs text-gray-500 mt-1">Buy ingredients</span>
+                            </label>
                         </div>
                         <div class="relative">
-                            <input type="radio" id="supplier" name="user_type" value="supplier" class="sr-only peer">
+                            <input type="radio" id="supplier" name="user_type_radio" value="supplier" class="sr-only peer">
                             <label for="supplier" class="flex flex-col items-center justify-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-primary-600 peer-checked:bg-primary-50 transition-all">
                                 <i class="fas fa-truck text-2xl mb-2 text-gray-600 peer-checked:text-primary-600"></i>
                                 <span class="text-sm font-medium text-gray-900">Supplier</span>
@@ -108,12 +125,14 @@
                         <div>
                             <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
                             <input id="first_name" name="first_name" type="text" required 
-                                   class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors">
+                                   class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
+                                   value="{{ request.POST.first_name|default:'' }}">
                         </div>
                         <div>
                             <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
                             <input id="last_name" name="last_name" type="text" required 
-                                   class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors">
+                                   class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
+                                   value="{{ request.POST.last_name|default:'' }}">
                         </div>
                     </div>
                     
@@ -122,7 +141,8 @@
                         <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
                         <input id="username" name="username" type="text" required 
                                class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
-                               placeholder="Enter a unique username">
+                               placeholder="Enter a unique username"
+                               value="{{ request.POST.username|default:'' }}">
                     </div>
                     
                     <!-- Email -->
@@ -130,15 +150,17 @@
                         <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
                         <input id="email" name="email" type="email" required 
                                class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
-                               placeholder="Enter your email address">
+                               placeholder="Enter your email address"
+                               value="{{ request.POST.email|default:'' }}">
                     </div>
                     
                     <!-- Phone -->
                     <div>
                         <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
-                        <input id="phone" name="phone" type="tel" required 
+                        <input id="phone" name="phone" type="tel" 
                                class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
-                               placeholder="Enter your phone number">
+                               placeholder="Enter your phone number"
+                               value="{{ request.POST.phone|default:'' }}">
                     </div>
                     
                     <!-- Business Name (conditionally shown) -->
@@ -146,7 +168,8 @@
                         <label for="business_name" class="block text-sm font-medium text-gray-700">Business Name</label>
                         <input id="business_name" name="company_name" type="text"
                                class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
-                               placeholder="Enter your business name">
+                               placeholder="Enter your business name"
+                               value="{{ request.POST.company_name|default:'' }}">
                     </div>
                     
                     <!-- Location -->
@@ -154,7 +177,8 @@
                         <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
                         <input id="location" name="location" type="text" required 
                                class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors"
-                               placeholder="Enter your city/location">
+                               placeholder="Enter your city/location"
+                               value="{{ request.POST.location|default:'' }}">
                     </div>
                     
                     <!-- Password -->
@@ -237,76 +261,74 @@
 
     <!-- JavaScript -->
     <script src="{% static 'js/main.js' %}"></script>
-    <script>
-        // Toggle password visibility
-        function togglePassword(fieldId) {
-            const field = document.getElementById(fieldId);
-            const eyeIcon = document.getElementById(fieldId + '-eye');
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const vendorRadio = document.getElementById('vendor');
+        const supplierRadio = document.getElementById('supplier');
+        const businessField = document.getElementById('business_field');
+        const businessInput = document.getElementById('business_name');
+        
+        // Remove the hidden input field entirely - we'll use radio button values directly
+        const hiddenField = document.getElementById('user_type_hidden');
+        if (hiddenField) {
+            hiddenField.remove();
+        }
+        
+        function updateBusinessField() {
+            const selectedType = document.querySelector('input[name="user_type_radio"]:checked')?.value;
+            console.log('Selected type:', selectedType);
             
-            if (field.type === 'password') {
-                field.type = 'text';
-                eyeIcon.classList.remove('fa-eye');
-                eyeIcon.classList.add('fa-eye-slash');
+            if (selectedType === 'supplier') {
+                businessField.style.display = 'block';
+                businessInput.required = true;
+                businessInput.placeholder = 'Enter your company/business name';
             } else {
-                field.type = 'password';
-                eyeIcon.classList.remove('fa-eye-slash');
-                eyeIcon.classList.add('fa-eye');
+                businessField.style.display = 'block';
+                businessInput.required = false;
+                businessInput.placeholder = 'Enter your food stall/business name (optional)';
             }
         }
         
-        // Handle account type selection
-        document.addEventListener('DOMContentLoaded', function() {
-            const vendorRadio = document.getElementById('vendor');
-            const supplierRadio = document.getElementById('supplier');
-            const businessField = document.getElementById('business_field');
-            const businessInput = document.getElementById('business_name');
+        // Add event listeners
+        vendorRadio.addEventListener('change', updateBusinessField);
+        supplierRadio.addEventListener('change', updateBusinessField);
+        
+        // Set initial state
+        updateBusinessField();
+        
+        // Form submission handling
+        form.addEventListener('submit', function(e) {
+            const selectedType = document.querySelector('input[name="user_type_radio"]:checked')?.value;
+            console.log('Form submitting with type:', selectedType);
             
-            function updateBusinessField() {
-                if (supplierRadio.checked) {
-                    businessField.style.display = 'block';
-                    businessInput.required = true;
-                    businessInput.placeholder = 'Enter your company/business name';
-                    document.getElementById('user_type_hidden').value = 'supplier';
-                } else {
-                    businessField.style.display = 'block';
-                    businessInput.required = false;
-                    businessInput.placeholder = 'Enter your food stall/business name (optional)';
-                    document.getElementById('user_type_hidden').value = 'vendor';
-                }
+            // Create a new hidden input with the selected type
+            const newHiddenInput = document.createElement('input');
+            newHiddenInput.type = 'hidden';
+            newHiddenInput.name = 'user_type';
+            newHiddenInput.value = selectedType;
+            form.appendChild(newHiddenInput);
+            
+            // Existing password validation
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Passwords do not match. Please try again.');
+                return false;
             }
             
-            vendorRadio.addEventListener('change', updateBusinessField);
-            supplierRadio.addEventListener('change', updateBusinessField);
-            
-            // Set initial state based on URL parameter
-            const urlParams = new URLSearchParams(window.location.search);
-            const type = urlParams.get('type');
-            if (type === 'supplier') {
-                supplierRadio.checked = true;
-            } else {
-                vendorRadio.checked = true;
+            if (password.length < 8) {
+                e.preventDefault();
+                alert('Password must be at least 8 characters long.');
+                return false;
             }
-            updateBusinessField();
-            
-            // Form validation
-            const form = document.querySelector('form');
-            form.addEventListener('submit', function(e) {
-                const password = document.getElementById('password').value;
-                const confirmPassword = document.getElementById('confirm_password').value;
-                
-                if (password !== confirmPassword) {
-                    e.preventDefault();
-                    alert('Passwords do not match. Please try again.');
-                    return;
-                }
-                
-                if (password.length < 8) {
-                    e.preventDefault();
-                    alert('Password must be at least 8 characters long.');
-                    return;
-                }
-            });
         });
-    </script>
+    });
+</script>
+
+
+
 </body>
 </html>

@@ -4,7 +4,6 @@
 {% block title %}Supplier Dashboard - BazaarBuddy{% endblock %}
 
 {% block navbar %}
-
 <nav class="bg-white shadow-lg border-b-2 border-primary-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
@@ -83,17 +82,20 @@
                         <p class="text-gray-600 mt-1">
                             <i class="fas fa-store text-primary-500 mr-2"></i>
                             <span class="font-semibold">@{{ username }}</span> - 
-                            {{ user.profile.company_name|default:"Your Business" }} 
+                            {{ user.userprofile.company_name|default:"Your Business" }}
                             <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium ml-2">
                                 Supplier
                             </span>
                         </p>
                     </div>
                     <div class="flex items-center space-x-4">
-                        <span class="text-sm text-gray-500">{{ user.profile.location }}</span>
+                        <span class="text-sm text-gray-500">
+                            <i class="fas fa-map-marker-alt mr-1"></i>
+                            {{ user.userprofile.location|default:"Location not set" }}
+                        </span>
                         <div class="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
                             <span class="text-white font-semibold">
-                                {{ user.first_name.0|default:username.0 }}{{ user.last_name.0|default:username.1 }}
+                                {{ user.first_name.0|default:username.0|upper }}{{ user.last_name.0|default:username.1|upper|default:"" }}
                             </span>
                         </div>
                     </div>
@@ -172,23 +174,23 @@
                         Quick Actions
                     </h3>
                     <div class="space-y-3">
-                        <button class="nav-link w-full flex items-center px-4 py-3 text-left text-gray-700 rounded-lg hover:bg-primary-600 hover:text-white transition-all">
+                        <button class="nav-link w-full flex items-center px-4 py-3 text-left text-gray-700 rounded-lg hover:bg-primary-600 hover:text-white transition-all" onclick="navigateToAddProduct()">
                             <i class="fas fa-plus mr-3"></i>
                             Add New Product
                         </button>
-                        <button class="nav-link w-full flex items-center px-4 py-3 text-left text-gray-700 rounded-lg hover:bg-primary-600 hover:text-white transition-all">
+                        <button class="nav-link w-full flex items-center px-4 py-3 text-left text-gray-700 rounded-lg hover:bg-primary-600 hover:text-white transition-all" onclick="navigateToProducts()">
                             <i class="fas fa-eye mr-3"></i>
                             View All Products
                         </button>
-                        <button class="nav-link w-full flex items-center px-4 py-3 text-left text-gray-700 rounded-lg hover:bg-primary-600 hover:text-white transition-all">
+                        <button class="nav-link w-full flex items-center px-4 py-3 text-left text-gray-700 rounded-lg hover:bg-primary-600 hover:text-white transition-all" onclick="navigateToOrders()">
                             <i class="fas fa-clipboard-list mr-3"></i>
                             Manage Orders
                         </button>
-                        <button class="nav-link w-full flex items-center px-4 py-3 text-left text-gray-700 rounded-lg hover:bg-primary-600 hover:text-white transition-all">
+                        <button class="nav-link w-full flex items-center px-4 py-3 text-left text-gray-700 rounded-lg hover:bg-primary-600 hover:text-white transition-all" onclick="navigateToAnalytics()">
                             <i class="fas fa-chart-bar mr-3"></i>
                             Sales Analytics
                         </button>
-                        <button class="nav-link w-full flex items-center px-4 py-3 text-left text-gray-700 rounded-lg hover:bg-primary-600 hover:text-white transition-all">
+                        <button class="nav-link w-full flex items-center px-4 py-3 text-left text-gray-700 rounded-lg hover:bg-primary-600 hover:text-white transition-all" onclick="navigateToProfile()">
                             <i class="fas fa-user-edit mr-3"></i>
                             Update Profile
                         </button>
@@ -202,22 +204,48 @@
                         Business Information
                     </h3>
                     <div class="space-y-3">
-                        <div class="flex justify-between">
+                        <div class="flex justify-between items-center">
                             <span class="text-gray-600">Business Name:</span>
-                            <span class="font-medium">{{ user.profile.company_name|default:"Not Set" }}</span>
+                            <span class="font-medium text-gray-900">
+                                {{ user.userprofile.company_name|default:"Not Set" }}
+                            </span>
                         </div>
-                        <div class="flex justify-between">
+                        <div class="flex justify-between items-center">
                             <span class="text-gray-600">Location:</span>
-                            <span class="font-medium">{{ user.profile.location|default:"Not Set" }}</span>
+                            <span class="font-medium text-gray-900">
+                                {{ user.userprofile.location|default:"Not Set" }}
+                            </span>
                         </div>
-                        <div class="flex justify-between">
+                        <div class="flex justify-between items-center">
                             <span class="text-gray-600">Phone:</span>
-                            <span class="font-medium">{{ user.profile.phone|default:"Not Set" }}</span>
+                            <span class="font-medium text-gray-900">
+                                {{ user.userprofile.phone|default:"Not Set" }}
+                            </span>
                         </div>
-                        <div class="flex justify-between">
+                        <div class="flex justify-between items-center">
                             <span class="text-gray-600">Email:</span>
-                            <span class="font-medium">{{ user.email }}</span>
+                            <span class="font-medium text-gray-900">{{ user.email }}</span>
                         </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">User Type:</span>
+                            <span class="font-medium text-green-600 capitalize">
+                                {{ user.userprofile.get_user_type_display }}
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Member Since:</span>
+                            <span class="font-medium text-gray-900">
+                                {{ user.date_joined|date:"M Y" }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Edit Profile Button -->
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <button onclick="navigateToProfile()" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-edit mr-2"></i>
+                            Edit Profile
+                        </button>
                     </div>
                 </div>
             </div>
@@ -231,7 +259,7 @@
                             <i class="fas fa-clock text-primary-500 mr-2"></i>
                             Recent Orders
                         </h3>
-                        <a href="#" class="text-primary-600 hover:text-primary-700 font-medium">View All</a>
+                        <a href="#" class="text-primary-600 hover:text-primary-700 font-medium transition-colors">View All</a>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full">
@@ -242,45 +270,64 @@
                                     <th class="text-left py-3 px-4 font-semibold text-gray-700">Product</th>
                                     <th class="text-left py-3 px-4 font-semibold text-gray-700">Amount</th>
                                     <th class="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-700">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="border-b border-gray-100 hover:bg-gray-50">
-                                    <td class="py-3 px-4">#ORD-001</td>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                    <td class="py-3 px-4 font-medium">#ORD-001</td>
                                     <td class="py-3 px-4">Raj Restaurant</td>
                                     <td class="py-3 px-4">Fresh Tomatoes (50kg)</td>
-                                    <td class="py-3 px-4">₹2,500</td>
+                                    <td class="py-3 px-4 font-semibold">₹2,500</td>
                                     <td class="py-3 px-4">
                                         <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">
                                             Pending
                                         </span>
                                     </td>
+                                    <td class="py-3 px-4">
+                                        <button class="text-primary-600 hover:text-primary-700 text-sm font-medium">View</button>
+                                    </td>
                                 </tr>
-                                <tr class="border-b border-gray-100 hover:bg-gray-50">
-                                    <td class="py-3 px-4">#ORD-002</td>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                    <td class="py-3 px-4 font-medium">#ORD-002</td>
                                     <td class="py-3 px-4">Green Grocery Store</td>
                                     <td class="py-3 px-4">Mixed Vegetables</td>
-                                    <td class="py-3 px-4">₹1,200</td>
+                                    <td class="py-3 px-4 font-semibold">₹1,200</td>
                                     <td class="py-3 px-4">
                                         <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
                                             Completed
                                         </span>
                                     </td>
+                                    <td class="py-3 px-4">
+                                        <button class="text-primary-600 hover:text-primary-700 text-sm font-medium">View</button>
+                                    </td>
                                 </tr>
-                                <tr class="border-b border-gray-100 hover:bg-gray-50">
-                                    <td class="py-3 px-4">#ORD-003</td>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                    <td class="py-3 px-4 font-medium">#ORD-003</td>
                                     <td class="py-3 px-4">Hotel Deluxe</td>
                                     <td class="py-3 px-4">Onions (25kg)</td>
-                                    <td class="py-3 px-4">₹800</td>
+                                    <td class="py-3 px-4 font-semibold">₹800</td>
                                     <td class="py-3 px-4">
                                         <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
                                             Processing
                                         </span>
                                     </td>
+                                    <td class="py-3 px-4">
+                                        <button class="text-primary-600 hover:text-primary-700 text-sm font-medium">View</button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                    
+                    <!-- Empty State (show when no orders) -->
+                    <!-- 
+                    <div class="text-center py-8">
+                        <i class="fas fa-clipboard-list text-gray-300 text-4xl mb-4"></i>
+                        <h4 class="text-lg font-medium text-gray-500 mb-2">No Recent Orders</h4>
+                        <p class="text-gray-400">Your recent orders will appear here once customers start placing orders.</p>
+                    </div>
+                    -->
                 </div>
 
                 <!-- Top Selling Products -->
@@ -290,10 +337,10 @@
                             <i class="fas fa-trophy text-primary-500 mr-2"></i>
                             Top Selling Products
                         </h3>
-                        <a href="#" class="text-primary-600 hover:text-primary-700 font-medium">Manage Products</a>
+                        <a href="#" class="text-primary-600 hover:text-primary-700 font-medium transition-colors">Manage Products</a>
                     </div>
                     <div class="space-y-4">
-                        <div class="flex items-center p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg">
+                        <div class="flex items-center p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg hover:shadow-md transition-shadow">
                             <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-carrot text-white"></i>
                             </div>
@@ -307,7 +354,7 @@
                             </div>
                         </div>
 
-                        <div class="flex items-center p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg">
+                        <div class="flex items-center p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg hover:shadow-md transition-shadow">
                             <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-pepper-hot text-white"></i>
                             </div>
@@ -321,7 +368,7 @@
                             </div>
                         </div>
 
-                        <div class="flex items-center p-4 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg">
+                        <div class="flex items-center p-4 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg hover:shadow-md transition-shadow">
                             <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-leaf text-white"></i>
                             </div>
@@ -343,12 +390,17 @@
 
 <!-- Messages Display -->
 {% if messages %}
-<div class="fixed top-4 right-4 z-50">
+<div class="fixed top-4 right-4 z-50 space-y-2">
     {% for message in messages %}
-        <div class="mb-2 p-4 rounded-lg shadow-lg {% if message.tags == 'success' %}bg-green-500 text-white{% elif message.tags == 'error' %}bg-red-500 text-white{% else %}bg-blue-500 text-white{% endif %} alert-message">
-            <div class="flex items-center">
-                <i class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %} mr-2"></i>
-                {{ message }}
+        <div class="mb-2 p-4 rounded-lg shadow-lg {% if message.tags == 'success' %}bg-green-500 text-white{% elif message.tags == 'error' %}bg-red-500 text-white{% else %}bg-blue-500 text-white{% endif %} alert-message max-w-sm">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <i class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %} mr-2"></i>
+                    <span>{{ message }}</span>
+                </div>
+                <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
         </div>
     {% endfor %}
@@ -369,11 +421,21 @@
         });
     }, 5000);
 
-    // Add click event listeners to quick action buttons
+    // Add click event listeners to quick action buttons (fallback)
     document.querySelectorAll('.nav-link').forEach(button => {
         button.addEventListener('click', function() {
-            // Add your navigation logic here
             console.log('Clicked:', this.textContent.trim());
+        });
+    });
+
+    // Add some interactive effects
+    document.querySelectorAll('.stat-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
         });
     });
 </script>
