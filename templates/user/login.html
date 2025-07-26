@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - BazaarBuddy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>
+</head>
+<body class="font-sans antialiased bg-gradient-to-br from-primary-50 via-white to-purple-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="{% url 'home' %}" class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
+                        <i class="fas fa-shopping-basket mr-2"></i>BazaarBuddy
+                    </a>
+                </div>
+                
+                <!-- Back to Home -->
+                <div>
+                    <a href="{% url 'home' %}" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Form -->
+    <div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <div class="mx-auto h-12 w-12 bg-primary-600 rounded-full flex items-center justify-center">
+                    <i class="fas fa-sign-in-alt text-white text-xl"></i>
+                </div>
+                <h2 class="mt-6 text-center text-3xl font-bold text-gray-900">
+                    Sign in to your account
+                </h2>
+                <p class="mt-2 text-center text-sm text-gray-600">
+                    Don't have an account?
+                    <a href="signup.html" class="font-medium text-primary-600 hover:text-primary-500 transition-colors">Sign up here</a>
+                </p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <form class="space-y-6" action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+                    <!-- Email or Username -->
+                    <div>
+                        <label for="email_or_username" class="block text-sm font-medium text-gray-700">Email or Username</label>
+                        <input id="email_or_username" name="email_or_username" type="text" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+                    </div>
+                    
+                    <!-- Password -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <div class="mt-1 relative">
+                            <input id="password" name="password" type="password" required class="block w-full px-3 py-2 border border-gray-300 rounded-md">
+                            <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePassword()">
+                                <i class="fas fa-eye text-gray-400 hover:text-gray-600" id="password-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div>
+                        <button type="submit" class="w-full py-3 px-4 rounded-md text-white bg-primary-600 hover:bg-primary-700">
+                            Login
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Divider -->
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white text-gray-500">Or sign in with</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Social Login -->
+                <div class="mt-6 grid grid-cols-2 gap-3">
+                    <button class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors">
+                        <i class="fab fa-google text-red-500 mr-2"></i>
+                        Google
+                    </button>
+                    <button class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors">
+                        <i class="fab fa-facebook-f text-blue-600 mr-2"></i>
+                        Facebook
+                    </button>
+                </div>
+                
+                <!-- Quick Access Links -->
+                <div class="mt-8 border-t border-gray-200 pt-6">
+                    <div class="text-center">
+                        <p class="text-sm text-gray-600 mb-4">New to BazaarBuddy?</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <a href="signup.html?type=vendor" class="inline-flex justify-center items-center px-4 py-2 border border-primary-300 text-sm font-medium rounded-md text-primary-700 bg-primary-50 hover:bg-primary-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+                                <i class="fas fa-store mr-2"></i>
+                                Join as Vendor
+                            </a>
+                            <a href="signup.html?type=supplier" class="inline-flex justify-center items-center px-4 py-2 border border-green-300 text-sm font-medium rounded-md text-green-700 bg-green-50 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
+                                <i class="fas fa-truck mr-2"></i>
+                                Join as Supplier
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Security Notice -->
+            <div class="bg-blue-50 border border-blue-200 rounded-md p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-shield-alt text-blue-400"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-blue-800">
+                            Your account is secure
+                        </h3>
+                        <div class="mt-2 text-sm text-blue-700">
+                            <p>We use industry-standard encryption to protect your data. Your password is never stored in plain text.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Toggle password visibility
+        function togglePassword() {
+            const field = document.getElementById('password');
+            const eyeIcon = document.getElementById('password-eye');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+        
+        // Form validation
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const emailInput = document.getElementById('email_or_username');
+            const passwordInput = document.getElementById('password');
+            
+            form.addEventListener('submit', function(e) {
+                if (emailInput.value.trim() === '') {
+                    e.preventDefault();
+                    alert('Please enter your email or username.');
+                    emailInput.focus();
+                    return;
+                }
+                
+                if (passwordInput.value.trim() === '') {
+                    e.preventDefault();
+                    alert('Please enter your password.');
+                    passwordInput.focus();
+                    return;
+                }
+            });
+            
+            // Auto-focus on email field
+            emailInput.focus();
+        });
+    </script>
+    
+    <!-- Django Messages -->
+    {% if messages %}
+      <div class="mb-4">
+        {% for message in messages %}
+          <div class="p-2 rounded bg-red-100 text-red-700 mb-2">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+</body>
+</html>
