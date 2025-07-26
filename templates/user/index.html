@@ -1,11 +1,469 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    <title>BazaarBuddy - Connecting Street Food Vendors with Trusted Suppliers</title>
     
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans antialiased bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="/" class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
+                        <i class="fas fa-shopping-basket mr-2"></i>BazaarBuddy
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="text-gray-900 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#about" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="#how-it-works" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">How It Works</a>
+                        <a href="./vendorsearch.html">Vendor Search</a>
+                        <a href="#contact" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                
+                <!-- Desktop Auth Buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="login.html" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Login</a>
+                    <a href="signup.html" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg">Sign Up</a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" id="mobile-menu-button" class="bg-gray-50 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 transition-colors">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars h-6 w-6" id="menu-icon"></i>
+                        <i class="fas fa-times h-6 w-6 hidden" id="close-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50 shadow-lg">
+                <a href="#home" class="text-gray-900 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium transition-colors">Home</a>
+                <a href="#about" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium transition-colors">About</a>
+                <a href="#how-it-works" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium transition-colors">How It Works</a>
+                <a href="#contact" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium transition-colors">Contact</a>
+                <a href="login.html" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium transition-colors">Login</a>
+                <a href="signup.html" class="bg-primary-600 hover:bg-primary-700 text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 mx-3 mt-4">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative bg-gradient-to-br from-primary-50 via-white to-purple-50 min-h-screen flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                    Connecting Street Food Vendors with Trusted Suppliers
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    Affordable ingredients. Verified sellers. Smarter sourcing.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="#cta" class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        <i class="fas fa-rocket mr-2"></i>Get Started
+                    </a>
+                    <a href="#about" class="border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg">
+                        <i class="fas fa-play-circle mr-2"></i>Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 w-20 h-20 bg-primary-100 rounded-full opacity-50 animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-32 h-32 bg-purple-100 rounded-full opacity-30 animate-pulse" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-yellow-100 rounded-full opacity-40 animate-pulse" style="animation-delay: 2s;"></div>
+    </section>
+
+    <!-- About / Value Proposition Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Why Choose BazaarBuddy?
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    We bridge the gap between street food vendors and quality suppliers, making ingredient sourcing simple, reliable, and affordable.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 border border-gray-100 hover:border-primary-200 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-search text-2xl text-primary-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Easy Discovery</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Find verified suppliers in your area with our intuitive search and filtering system. Save time and discover quality ingredients.
+                    </p>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 border border-gray-100 hover:border-primary-200 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Verified Quality</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        All suppliers are thoroughly vetted and verified. Access reviews, ratings, and quality certifications before you buy.
+                    </p>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 border border-gray-100 hover:border-primary-200 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-dollar-sign text-2xl text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Better Prices</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Get competitive wholesale prices and bulk discounts. Our platform helps you reduce costs while maintaining quality.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    How It Works
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Getting started is simple. Follow these three easy steps to revolutionize your ingredient sourcing.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <i class="fas fa-search text-2xl text-white"></i>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">1. Search & Discover</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Browse through our extensive network of verified suppliers. Filter by location, price, and product categories to find exactly what you need.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <i class="fas fa-handshake text-2xl text-white"></i>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">2. Connect & Negotiate</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Connect directly with suppliers through our platform. Negotiate prices, discuss quality requirements, and build lasting business relationships.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <i class="fas fa-truck text-2xl text-white"></i>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">3. Order & Receive</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Place your orders with confidence. Track deliveries, manage payments securely, and focus on what you do best - creating amazing food.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Popular Categories
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Find quality ingredients across various categories to meet your street food business needs.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-6">
+                <!-- Category 1 -->
+                <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-red-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-pepper-hot text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Spices & Seasonings</h3>
+                    <p class="text-gray-600 text-sm">Premium spices, herbs, and seasoning blends for authentic flavors.</p>
+                    <div class="mt-4 text-red-600 font-semibold">500+ Suppliers</div>
+                </div>
+                
+                <!-- Category 2 -->
+                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-green-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-carrot text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Fresh Vegetables</h3>
+                    <p class="text-gray-600 text-sm">Farm-fresh vegetables delivered directly from local farms.</p>
+                    <div class="mt-4 text-green-600 font-semibold">300+ Suppliers</div>
+                </div>
+                
+                <!-- Category 3 -->
+                <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-yellow-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-bread-slice text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Grains & Flour</h3>
+                    <p class="text-gray-600 text-sm">High-quality grains, flour, and baking essentials.</p>
+                    <div class="mt-4 text-yellow-600 font-semibold">200+ Suppliers</div>
+                </div>
+                
+                <!-- Category 4 -->
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-fish text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Meat & Seafood</h3>
+                    <p class="text-gray-600 text-sm">Fresh meat and seafood from certified suppliers.</p>
+                    <div class="mt-4 text-blue-600 font-semibold">150+ Suppliers</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    What Our Users Say
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Real feedback from vendors and suppliers who transformed their business with BazaarBuddy.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-primary-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-900">Raj Patel</h4>
+                            <p class="text-gray-600 text-sm">Street Food Vendor</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"BazaarBuddy helped me find reliable spice suppliers at 30% better prices. My food stall's profits have increased significantly!"</p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-green-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-900">Priya Sharma</h4>
+                            <p class="text-gray-600 text-sm">Vegetable Supplier</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"As a supplier, I've expanded my business to serve 50+ vendors through this platform. The ordering system is fantastic!"</p>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-yellow-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-900">Ahmed Khan</h4>
+                            <p class="text-gray-600 text-sm">Food Truck Owner</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"The quality verification system gives me confidence. I know I'm getting the best ingredients for my customers."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="py-20 bg-primary-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 text-center text-white">
+                <div>
+                    <div class="text-4xl font-bold mb-2">5,000+</div>
+                    <div class="text-primary-200">Active Vendors</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-2">1,200+</div>
+                    <div class="text-primary-200">Verified Suppliers</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-2">50,000+</div>
+                    <div class="text-primary-200">Orders Completed</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-2">25+</div>
+                    <div class="text-primary-200">Cities Covered</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section id="cta" class="py-20 bg-gradient-to-r from-primary-600 to-purple-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                Ready to Transform Your Business?
+            </h2>
+            <p class="text-xl text-primary-100 mb-10 max-w-2xl mx-auto">
+                Join thousands of vendors and suppliers who trust BazaarBuddy for their ingredient sourcing needs.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <a href="signup.html?type=vendor" class="bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-w-48">
+                    <i class="fas fa-store mr-2"></i>I'm a Vendor
+                </a>
+                <a href="signup.html?type=supplier" class="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-w-48">
+                    <i class="fas fa-truck mr-2"></i>I'm a Supplier
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="md:col-span-2">
+                    <a href="/" class="text-2xl font-bold text-white hover:text-primary-400 transition-colors mb-4 inline-block">
+                        <i class="fas fa-shopping-basket mr-2"></i>BazaarBuddy
+                    </a>
+                    <p class="text-gray-400 mb-6 max-w-md">
+                        Connecting street food vendors with trusted suppliers. Making ingredient sourcing simple, reliable, and affordable.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin-in text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-white transition-colors">How It Works</a></li>
+                        <li><a href="/pricing" class="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="/blog" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legal -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/terms" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="/privacy" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="/contact" class="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="/support" class="text-gray-400 hover:text-white transition-colors">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 BazaarBuddy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
