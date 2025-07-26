@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Analytics - Bazaar Buddy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-4 bg-blue-600 text-white shadow-lg">
+  <div class="flex items-center space-x-3 ">
+        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" 
+            alt="Bazaar Buddy Logo" 
+            class="w-8 h-8">
+            <a href="index.html" class="text-2xl font-bold">Bazaar Buddy</a>
+        </div>        <div class="hidden md:flex space-x-6">
+            <a href="vendor-dashboard.html" class="hover:text-blue-200">Dashboard</a>
+            <a href="#" class="hover:text-blue-200 font-medium">Analytics</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="index.html" class="hover:text-blue-200">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- KPI Cards -->
+        <div class="grid md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Orders</p>
+                        <p class="text-3xl font-bold text-blue-600">247</p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-shopping-cart text-blue-600"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-green-600 mt-2">
+                    <i class="fas fa-arrow-up"></i> +12% from last month
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Spent</p>
+                        <p class="text-3xl font-bold text-green-600">₹1,24,500</p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-rupee-sign text-green-600"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-red-600 mt-2">
+                    <i class="fas fa-arrow-down"></i> -8% from last month
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Average Order Value</p>
+                        <p class="text-3xl font-bold text-purple-600">₹504</p>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-chart-line text-purple-600"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-green-600 mt-2">
+                    <i class="fas fa-arrow-up"></i> +3% from last month
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Cost Savings</p>
+                        <p class="text-3xl font-bold text-orange-600">₹28,750</p>
+                    </div>
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-piggy-bank text-orange-600"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-green-600 mt-2">
+                    <i class="fas fa-arrow-up"></i> +15% this month
+                </p>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid lg:grid-cols-2 gap-8 mb-8">
+            <!-- Spending Trend Chart -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Monthly Spending Trend</h3>
+                <div class="h-80">
+                    <canvas id="spendingChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Category Breakdown Chart -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Spending by Category</h3>
+                <div class="h-80">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Supplier Performance Chart -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Top Suppliers by Volume</h3>
+                <div class="h-80">
+                    <canvas id="supplierChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Savings Trend Chart -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Cost Savings Over Time</h3>
+                <div class="h-80">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Recommendations -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">AI-Powered Insights</h3>
+                <button id="generateReport" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                    <i class="fas fa-robot mr-2"></i>Generate AI Report
+                </button>
+            </div>
+            <div id="aiRecommendationsContainer" class="hidden">
+  <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6">
+    <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
+      <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>Smart Recommendations
+    </h4>
+    <div id="aiRecommendations" class="space-y-3">
+      <!-- AI recommendations will be injected here -->
+    </div>
+  </div>
+</div>
+
+            <div id="defaultMessage" class="text-center py-8 text-gray-500">
+                <i class="fas fa-chart-bar text-4xl mb-4"></i>
+                <p>Click "Generate AI Report" to get personalized insights based on your purchasing patterns</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Spending Trend Chart
+            const spendingCtx = document.getElementById('spendingChart').getContext('2d');
+          const spendingChart = new Chart(spendingCtx,{
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Monthly Spending (₹)',
+                        data: [85000, 92000, 78000, 105000, 98000, 112000, 89000, 95000, 108000, 115000, 102000, 124500],
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + (value/1000) + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Category Breakdown Chart
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            const categoryChart = new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Vegetables', 'Spices', 'Grains', 'Fruits', 'Dairy', 'Others'],
+                    datasets: [{
+                        data: [35, 20, 18, 12, 10, 5],
+                        backgroundColor: [
+                            '#10b981',
+                            '#f59e0b',
+                            '#8b5cf6',
+                            '#ef4444',
+                            '#06b6d4',
+                            '#6b7280'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+
+            // Supplier Performance Chart
+            const supplierCtx = document.getElementById('supplierChart').getContext('2d');
+            const supplierChart = new Chart(supplierCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Fresh Farm', 'Spice World', 'Green Valley', 'Grain Masters', 'Golden Spices'],
+                    datasets: [{
+                        label: 'Order Volume (₹)',
+                        data: [25000, 18000, 22000, 15000, 12000],
+                        backgroundColor: [
+                            '#10b981',
+                            '#f59e0b',
+                            '#8b5cf6',
+                            '#ef4444',
+                            '#06b6d4'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + (value/1000) + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Savings Trend Chart
+            const savingsCtx = document.getElementById('savingsChart').getContext('2d');
+            const savingsChart = new Chart(savingsCtx,  {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Cost Savings (₹)',
+                        data: [15000, 18000, 22000, 25000, 27000, 28750],
+                        borderColor: '#f97316',
+                        backgroundColor: 'rgba(249, 115, 22, 0.2)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + (value/1000) + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+        
+
+            document.getElementById('generateReport').addEventListener('click', async () => {
+            const button = document.getElementById('generateReport');
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Analyzing...';
+            button.disabled = true;
+
+            // Get chart data
+            const spendingTrend = spendingChart.data.datasets[0].data;
+            const categoryData = categoryChart.data.datasets[0].data;
+            const categoryLabels = categoryChart.data.labels;
+            const supplierData = supplierChart.data.datasets[0].data;
+            const supplierLabels = supplierChart.data.labels;
+            const savingsData = savingsChart.data.datasets[0].data;
+
+            const analyticsData = {
+                spending_trend: spendingTrend,
+                categories: categoryLabels.map((label, i) => `${label}: ${categoryData[i]}`),
+                suppliers: supplierLabels.map((label, i) => `${label}: ${supplierData[i]}`),
+                savings: savingsData
+            };
+
+            try {
+             const response = await fetch('http://127.0.0.1:5000/generate-ai-report', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(analyticsData)
+                });
+
+                const data = await response.json();
+
+                const list = document.getElementById('aiRecommendations');
+                list.innerHTML = '';
+
+
+              
+const recContainer = document.getElementById('aiRecommendations');
+recContainer.innerHTML = '';
+
+// Icons
+const icons = [
+  'fas fa-piggy-bank text-green-500',
+  'fas fa-clock text-blue-500',
+  'fas fa-layer-group text-purple-500',
+  'fas fa-star text-yellow-500',
+  'fas fa-leaf text-orange-500'
+];
+
+// Filter: only lines that start with a number or are meaningful recommendations
+const filteredRecs = data.recommendations
+  .map(rec => rec.replace(/\*\*/g, '').trim()) // remove **
+  .filter(rec => /^[0-9]+\./.test(rec) || rec.length > 25) // only numbered or longer lines
+  .slice(0, 5); // only 5
+
+filteredRecs.forEach((rec, index) => {
+  const card = document.createElement('div');
+  card.className =
+    'flex items-start justify-between bg-white rounded-lg border-l-4 border-blue-500 p-4 shadow hover:shadow-lg transition';
+
+  card.innerHTML = `
+    <div class="flex items-start space-x-4">
+      <div class="flex-shrink-0">
+        <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+          <i class="${icons[index % icons.length]}"></i>
+        </div>
+      </div>
+      <div>
+        <p class="text-gray-700 text-sm leading-relaxed">${rec}</p>
+      </div>
+    </div>
+  `;
+  recContainer.appendChild(card);
+});
+
+
+
+                document.getElementById('defaultMessage').classList.add('hidden');
+                document.getElementById('aiRecommendationsContainer').classList.remove('hidden');
+            } catch (err) {
+                console.error(err);
+                alert("Error fetching AI insights!");
+            } finally {
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }
+        });
+
+
+        });
+    </script>
+</body>
+</html>

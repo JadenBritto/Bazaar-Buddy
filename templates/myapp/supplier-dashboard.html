@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Dashboard - Bazaar Buddy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-4 bg-orange-600 text-white shadow-lg">
+  <div class="flex items-center space-x-3 ">
+        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" 
+            alt="Bazaar Buddy Logo" 
+            class="w-8 h-8">
+            <a href="index.html" class="text-2xl font-bold">Bazaar Buddy</a>
+        </div>        <div class="hidden md:flex space-x-6">
+            <a href="#" class="hover:text-orange-200 font-medium">Dashboard</a>
+            <a href="#products" class="hover:text-orange-200">Products</a>
+            <a href="#orders" class="hover:text-orange-200">Orders</a>
+            <a href="supplier-analytics.html" class="hover:text-orange-200">Analytics</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span class="hidden md:block">Welcome, Jason!</span>
+            <a href="index.html" class="hover:text-orange-200">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Stats Overview -->
+        <div class="grid md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Revenue</p>
+                        <p class="text-3xl font-bold text-green-600">₹2,45,750</p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-rupee-sign text-green-600"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-green-600 mt-2">
+                    <i class="fas fa-arrow-up"></i> +15% from last month
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Active Orders</p>
+                        <p class="text-3xl font-bold text-blue-600">23</p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-shopping-cart text-blue-600"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-blue-600 mt-2">
+                    <i class="fas fa-arrow-up"></i> +3 new today
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Products Listed</p>
+                        <p class="text-3xl font-bold text-purple-600">47</p>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-box text-purple-600"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-purple-600 mt-2">
+                    <i class="fas fa-arrow-up"></i> +2 added this week
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Customer Rating</p>
+                        <p class="text-3xl font-bold text-yellow-600">4.8</p>
+                    </div>
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-star text-yellow-600"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-yellow-600 mt-2">
+                    <i class="fas fa-arrow-up"></i> +0.2 this month
+                </p>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Quick Actions</h3>
+            <div class="grid md:grid-cols-4 gap-4">
+                <button id="addProductBtn" class="bg-orange-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-orange-700 transition">
+                    <i class="fas fa-plus mr-2"></i>Add Product
+                </button>
+                <button onclick="window.location.href='#orders'" class="bg-blue-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                    <i class="fas fa-eye mr-2"></i>View Orders
+                </button>
+                <button onclick="window.location.href='supplier-analytics.html'" class="bg-green-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                    <i class="fas fa-chart-line mr-2"></i>Analytics
+                </button>
+                <button class="bg-purple-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-purple-700 transition">
+                    <i class="fas fa-cog mr-2"></i>Settings
+                </button>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid lg:grid-cols-2 gap-8 mb-8">
+            <!-- Sales Chart -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Sales Trend (Last 6 Months)</h3>
+                <div class="h-80">
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Product Performance -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Top Products</h3>
+                <div class="h-80">
+                    <canvas id="productChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Management -->
+        <div id="products" class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Product Management</h3>
+                <button id="addProductBtn2" class="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 transition">
+                    <i class="fas fa-plus mr-2"></i>Add New Product
+                </button>
+            </div>
+            
+            <!-- Products Grid -->
+            <div class="grid md:grid-cols-3 gap-6" id="productsGrid">
+                <!-- Products will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Orders Section -->
+        <div id="orders" class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Recent Orders</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full table-auto">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th class="px-4 py-3 text-left">Order ID</th>
+                            <th class="px-4 py-3 text-left">Vendor</th>
+                            <th class="px-4 py-3 text-left">Product</th>
+                            <th class="px-4 py-3 text-left">Quantity</th>
+                            <th class="px-4 py-3 text-left">Amount</th>
+                            <th class="px-4 py-3 text-left">Status</th>
+                            <th class="px-4 py-3 text-left">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTable">
+                        <!-- Orders will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        const products = [
+            { id: 1, name: "Fresh Tomatoes", category: "Vegetables", price: 45, unit: "kg", stock: 200, minOrder: 10, image: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcR6DIluazKD9CCW6exWzDQ21iW25I1BhnWHX4SQ7gWQmJXRzl9xAbQabmEOOKLjMw8IYF2I3BlQp6bXpyJ5acqVEOvwOH5x9eAkDi4MQYhqHQ" },
+            { id: 2, name: "Red Chili Powder", category: "Spices", price: 120, unit: "kg", stock: 50, minOrder: 5, image: "https://goodness-farm.com/wp-content/uploads/2021/04/image-Red_Chilli_Karam_Podi-1590824175448.jpg" },
+            { id: 3, name: "Fresh Onions", category: "Vegetables", price: 35, unit: "kg", stock: 150, minOrder: 20, image: "https://5.imimg.com/data5/ANDROID/Default/2021/3/GP/VO/XV/125443919/screenshot-20210320-183611-jpg-500x500.jpg" },
+            { id: 4, name: "Basmati Rice", category: "Grains", price: 80, unit: "kg", stock: 100, minOrder: 25, image: "https://5.imimg.com/data5/SELLER/Default/2022/3/LJ/ZL/GQ/49710505/soft-basmati-rice-500x500.png" },
+            { id: 5, name: "Turmeric Powder", category: "Spices", price: 150, unit: "kg", stock: 30, minOrder: 5, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsxa1xwnXts4_fVr4ByzmF0RzTKMQfkLVlVA&s" },
+            { id: 6, name: "Fresh Potatoes", category: "Vegetables", price: 25, unit: "kg", stock: 300, minOrder: 50, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXTmSwA5WnE3pJ6572IxTOIo0JjYW5fkRHrQ&s" }
+        ];
+
+        const orders = [
+            { id: "ORD001", vendor: "Street Food Corner", product: "Fresh Tomatoes", quantity: "50 kg", amount: 2250, status: "completed" },
+            { id: "ORD002", vendor: "Spice Junction", product: "Red Chili Powder", quantity: "25 kg", amount: 3000, status: "pending" },
+            { id: "ORD003", vendor: "Healthy Bites", product: "Fresh Onions", quantity: "30 kg", amount: 1050, status: "processing" },
+            { id: "ORD004", vendor: "Rice Bowl", product: "Basmati Rice", quantity: "100 kg", amount: 8000, status: "shipped" },
+            { id: "ORD005", vendor: "Curry House", product: "Turmeric Powder", quantity: "10 kg", amount: 1500, status: "completed" }
+        ];
+
+        // Populate products grid
+        function populateProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h4 class="font-bold text-lg mb-2">${product.name}</h4>
+                        <p class="text-gray-600 text-sm mb-2">${product.category}</p>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-2xl font-bold text-orange-600">₹${product.price}/${product.unit}</span>
+                            <span class="text-sm text-gray-500">Stock: ${product.stock} ${product.unit}</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-600">Min Order: ${product.minOrder} ${product.unit}</span>
+                            <span class="px-2 py-1 rounded-full text-xs ${product.stock < 50 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}">
+                                ${product.stock < 50 ? 'Low Stock' : 'In Stock'}
+                            </span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-orange-600 text-white py-2 px-3 rounded-md hover:bg-orange-700 transition text-sm">
+                                Edit
+                            </button>
+                            <button class="flex-1 bg-gray-300 text-gray-700 py-2 px-3 rounded-md hover:bg-gray-400 transition text-sm">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Populate orders table
+        function populateOrders() {
+            const table = document.getElementById('ordersTable');
+            table.innerHTML = orders.map(order => `
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-4 py-3 font-medium">${order.id}</td>
+                    <td class="px-4 py-3">${order.vendor}</td>
+                    <td class="px-4 py-3">${order.product}</td>
+                    <td class="px-4 py-3">${order.quantity}</td>
+                    <td class="px-4 py-3">₹${order.amount.toLocaleString()}</td>
+                    <td class="px-4 py-3">
+                        <span class="px-2 py-1 rounded-full text-xs ${getStatusColor(order.status)}">
+                            ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3">
+                        <button class="text-blue-600 hover:text-blue-800 mr-2">View</button>
+                        <button class="text-green-600 hover:text-green-800">Update</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                completed: 'bg-green-100 text-green-800',
+                pending: 'bg-yellow-100 text-yellow-800',
+                processing: 'bg-blue-100 text-blue-800',
+                shipped: 'bg-purple-100 text-purple-800'
+            };
+            return colors[status] || 'bg-gray-100 text-gray-800';
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            // Sales Chart
+            const salesCtx = document.getElementById('salesChart').getContext('2d');
+            new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Sales (₹)',
+                        data: [45000, 52000, 48000, 61000, 55000, 67000],
+                        borderColor: '#ea580c',
+                        backgroundColor: 'rgba(234, 88, 12, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + (value/1000) + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Product Performance Chart
+            const productCtx = document.getElementById('productChart').getContext('2d');
+            new Chart(productCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Tomatoes', 'Chili Powder', 'Onions', 'Rice', 'Turmeric'],
+                    datasets: [{
+                        label: 'Units Sold',
+                        data: [450, 280, 380, 320, 150],
+                        backgroundColor: [
+                            '#ef4444',
+                            '#f97316',
+                            '#eab308',
+                            '#22c55e',
+                            '#3b82f6'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        }
+
+        // Event listeners
+        document.getElementById('addProductBtn').addEventListener('click', function() {
+            alert('Add Product functionality would open a modal or redirect to add product page');
+        });
+
+        document.getElementById('addProductBtn2').addEventListener('click', function() {
+            alert('Add Product functionality would open a modal or redirect to add product page');
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            populateProducts();
+            populateOrders();
+            initializeCharts();
+        });
+    </script>
+</body>
+</html>

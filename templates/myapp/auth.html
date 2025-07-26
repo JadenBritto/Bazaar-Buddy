@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register - Bazar Buddy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-4 bg-orange-600 text-white">
+          <div class="flex items-center space-x-3 ">
+        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" 
+            alt="Bazaar Buddy Logo" 
+            class="w-8 h-8">
+            <a href="index.html" class="text-2xl font-bold">Bazaar Buddy</a>
+        </div>
+        <a href="index.html" class="hover:text-orange-200">← Back to Home</a>
+    </nav>
+
+    <div class="flex items-center justify-center min-h-screen py-12">
+        <div class="max-w-md mx-auto bg-white shadow-lg rounded-lg p-8 w-full">
+            <!-- Toggle Buttons -->
+            <div class="flex mb-6 bg-gray-100 rounded-lg p-1">
+                <button id="loginTab" class="flex-1 py-2 px-4 rounded-md bg-orange-600 text-white font-medium transition">
+                    Login
+                </button>
+                <button id="registerTab" class="flex-1 py-2 px-4 rounded-md text-gray-600 font-medium transition">
+                    Register
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="space-y-6">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-gray-800">Welcome Back</h2>
+                    <p class="text-gray-600 mt-2">Sign in to your account</p>
+                </div>
+
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter your email">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input type="password" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter your password">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-orange-600 focus:ring-orange-500">
+                            <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                        </label>
+                        <a href="#" class="text-sm text-orange-600 hover:text-orange-700">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="w-full bg-orange-600 text-white py-2 px-4 rounded-md hover:bg-orange-700 transition font-semibold">
+                        Sign In
+                    </button>
+                </form>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" class="hidden space-y-6">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-gray-800">Create Account</h2>
+                    <p class="text-gray-600 mt-2">Join our marketplace today</p>
+                </div>
+
+                <form class="space-y-4">
+                    <!-- User Type Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">I am a:</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-orange-300 transition">
+                                <input type="radio" name="userType" value="supplier" class="text-orange-600 focus:ring-orange-500" required>
+                                <div class="ml-3">
+                                    <div class="font-medium text-gray-800">Supplier</div>
+                                    <div class="text-xs text-gray-600">I sell products</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition">
+                                <input type="radio" name="userType" value="vendor" class="text-blue-600 focus:ring-blue-500" required>
+                                <div class="ml-3">
+                                    <div class="font-medium text-gray-800">Vendor</div>
+                                    <div class="text-xs text-gray-600">I buy products</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Common Fields -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                            <input type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="First name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                            <input type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Last name">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter your email">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                        <input type="tel" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter your phone number">
+                    </div>
+
+                    <!-- Dynamic Fields Based on User Type -->
+                    <div id="supplierFields" class="hidden space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Business Name</label>
+                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter your business name">
+                        </div>
+                     
+                    </div>
+
+                    <div id="vendorFields" class="hidden space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Shop/Restaurant Name</label>
+                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your shop name">
+                        </div>
+                       
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                        <input type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Enter your city/area">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input type="password" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Create a password">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                        <input type="password" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Confirm your password">
+                    </div>
+
+                    <div class="flex items-center">
+                        <input type="checkbox" required class="rounded border-gray-300 text-orange-600 focus:ring-orange-500">
+                        <span class="ml-2 text-sm text-gray-600">I agree to the <a href="#" class="text-orange-600 hover:text-orange-700">Terms of Service</a> and <a href="#" class="text-orange-600 hover:text-orange-700">Privacy Policy</a></span>
+                    </div>
+
+                    <button type="submit" class="w-full bg-orange-600 text-white py-2 px-4 rounded-md hover:bg-orange-700 transition font-semibold">
+                        Create Account
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        const loginTab = document.getElementById('loginTab');
+        const registerTab = document.getElementById('registerTab');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('bg-orange-600', 'text-white');
+            loginTab.classList.remove('text-gray-600');
+            registerTab.classList.remove('bg-orange-600', 'text-white');
+            registerTab.classList.add('text-gray-600');
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+        });
+
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('bg-orange-600', 'text-white');
+            registerTab.classList.remove('text-gray-600');
+            loginTab.classList.remove('bg-orange-600', 'text-white');
+            loginTab.classList.add('text-gray-600');
+            registerForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+        });
+
+        // Dynamic fields based on user type
+        const userTypeRadios = document.querySelectorAll('input[name="userType"]');
+        const supplierFields = document.getElementById('supplierFields');
+        const vendorFields = document.getElementById('vendorFields');
+
+        userTypeRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value === 'supplier') {
+                    supplierFields.classList.remove('hidden');
+                    vendorFields.classList.add('hidden');
+                } else if (e.target.value === 'vendor') {
+                    vendorFields.classList.remove('hidden');
+                    supplierFields.classList.add('hidden');
+                }
+            });
+        });
+
+        document.querySelector('#loginForm form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Login successful! Redirecting to dashboard...');
+            // Simulate redirect based on user type (you'd determine this from login)
+            window.location.href = 'vendor-dashboard.html'; // or supplie-dashboard.html
+        });
+
+        document.querySelector('#registerForm form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const userType = document.querySelector('input[name="userType"]:checked').value;
+            alert(`Registration successful! Welcome to Bazar Buddy as a ${userType}!`);
+            // Redirect based on user type
+            if (userType === 'supplier') {
+                window.location.href = 'supplier-dashboard.html';
+            } else {
+                window.location.href = 'vendor-dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>

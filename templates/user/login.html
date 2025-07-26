@@ -5,10 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - BazaarBuddy</title>
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
-    <script src="{% static 'js/main.js' %}"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body class="font-sans antialiased bg-gradient-to-br from-primary-50 via-white to-purple-50 min-h-screen">
     <!-- Navigation -->
@@ -17,14 +43,14 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
-                    <a href="{% url 'home' %}" class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
+                    <a href="{% url 'index' %}" class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
                         <i class="fas fa-shopping-basket mr-2"></i>BazaarBuddy
                     </a>
                 </div>
                 
                 <!-- Back to Home -->
                 <div>
-                    <a href="{% url 'home' %}" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    <a href="{% url 'index' %}" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                         <i class="fas fa-arrow-left mr-2"></i>Back to Home
                     </a>
                 </div>
@@ -44,7 +70,7 @@
                 </h2>
                 <p class="mt-2 text-center text-sm text-gray-600">
                     Don't have an account?
-                    <a href="signup.html" class="font-medium text-primary-600 hover:text-primary-500 transition-colors">Sign up here</a>
+                    <a href="{% url 'signup' %}" class="font-medium text-primary-600 hover:text-primary-500 transition-colors">Sign up here</a>
                 </p>
             </div>
             
@@ -54,24 +80,57 @@
                     <!-- Email or Username -->
                     <div>
                         <label for="email_or_username" class="block text-sm font-medium text-gray-700">Email or Username</label>
-                        <input id="email_or_username" name="email_or_username" type="text" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+                        <div class="mt-1 relative">
+                            <input id="email_or_username" name="email_or_username" type="text" required 
+                                   class="appearance-none relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-colors"
+                                   placeholder="Enter your email or username">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-user text-gray-400"></i>
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- Password -->
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <div class="mt-1 relative">
-                            <input id="password" name="password" type="password" required class="block w-full px-3 py-2 border border-gray-300 rounded-md">
+                            <input id="password" name="password" type="password" required 
+                                   class="appearance-none relative block w-full px-3 py-2 pl-10 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm transition-colors"
+                                   placeholder="Enter your password">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-gray-400"></i>
+                            </div>
                             <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePassword()">
                                 <i class="fas fa-eye text-gray-400 hover:text-gray-600" id="password-eye"></i>
                             </button>
                         </div>
                     </div>
                     
+                    <!-- Remember Me and Forgot Password -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember_me" name="remember_me" type="checkbox" 
+                                   class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                            <label for="remember_me" class="ml-2 block text-sm text-gray-900">
+                                Remember me
+                            </label>
+                        </div>
+                        
+                        <div class="text-sm">
+                            <a href="/forgot-password" class="font-medium text-primary-600 hover:text-primary-500 transition-colors">
+                                Forgot your password?
+                            </a>
+                        </div>
+                    </div>
+                    
                     <!-- Submit Button -->
                     <div>
-                        <button type="submit" class="w-full py-3 px-4 rounded-md text-white bg-primary-600 hover:bg-primary-700">
-                            Login
+                        <button type="submit" 
+                                class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                                <i class="fas fa-sign-in-alt text-primary-500 group-hover:text-primary-400"></i>
+                            </span>
+                            Sign In
                         </button>
                     </div>
                 </form>
@@ -105,11 +164,11 @@
                     <div class="text-center">
                         <p class="text-sm text-gray-600 mb-4">New to BazaarBuddy?</p>
                         <div class="grid grid-cols-2 gap-3">
-                            <a href="signup.html?type=vendor" class="inline-flex justify-center items-center px-4 py-2 border border-primary-300 text-sm font-medium rounded-md text-primary-700 bg-primary-50 hover:bg-primary-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+                            <a href="{% url 'signup' %}?type=vendor" class="inline-flex justify-center items-center px-4 py-2 border border-primary-300 text-sm font-medium rounded-md text-primary-700 bg-primary-50 hover:bg-primary-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
                                 <i class="fas fa-store mr-2"></i>
                                 Join as Vendor
                             </a>
-                            <a href="signup.html?type=supplier" class="inline-flex justify-center items-center px-4 py-2 border border-green-300 text-sm font-medium rounded-md text-green-700 bg-green-50 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
+                            <a href="{% url 'signup' %}?type=supplier" class="inline-flex justify-center items-center px-4 py-2 border border-green-300 text-sm font-medium rounded-md text-green-700 bg-green-50 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">
                                 <i class="fas fa-truck mr-2"></i>
                                 Join as Supplier
                             </a>
@@ -138,6 +197,7 @@
     </div>
 
     <!-- JavaScript -->
+    <script src="{% static 'js/main.js' %}"></script>
     <script>
         // Toggle password visibility
         function togglePassword() {
@@ -181,14 +241,5 @@
             emailInput.focus();
         });
     </script>
-    
-    <!-- Django Messages -->
-    {% if messages %}
-      <div class="mb-4">
-        {% for message in messages %}
-          <div class="p-2 rounded bg-red-100 text-red-700 mb-2">{{ message }}</div>
-        {% endfor %}
-      </div>
-    {% endif %}
 </body>
 </html>

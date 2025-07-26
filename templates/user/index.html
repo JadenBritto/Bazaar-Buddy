@@ -43,7 +43,7 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
-                    <a href="/" class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
+                    <a href="{% url 'index' %}" class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
                         <i class="fas fa-shopping-basket mr-2"></i>BazaarBuddy
                     </a>
                 </div>
@@ -54,15 +54,14 @@
                         <a href="#home" class="text-gray-900 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
                         <a href="#about" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
                         <a href="#how-it-works" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">How It Works</a>
-                        <a href="./vendorsearch.html">Vendor Search</a>
                         <a href="#contact" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
                     </div>
                 </div>
                 
                 <!-- Desktop Auth Buttons -->
                 <div class="hidden md:flex items-center space-x-4">
-                    <a href="login.html" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Login</a>
-                    <a href="signup.html" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg">Sign Up</a>
+                    <a href="{% url 'login' %}" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Login</a>
+                    <a href="{% url 'signup' %}" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg">Sign Up</a>
                 </div>
                 
                 <!-- Mobile menu button -->
@@ -83,8 +82,8 @@
                 <a href="#about" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium transition-colors">About</a>
                 <a href="#how-it-works" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium transition-colors">How It Works</a>
                 <a href="#contact" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium transition-colors">Contact</a>
-                <a href="login.html" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium transition-colors">Login</a>
-                <a href="signup.html" class="bg-primary-600 hover:bg-primary-700 text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 mx-3 mt-4">Sign Up</a>
+                <a href="{% url 'login' %}" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium transition-colors">Login</a>
+                <a href="{% url 'signup' %}" class="bg-primary-600 hover:bg-primary-700 text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 mx-3 mt-4">Sign Up</a>
             </div>
         </div>
     </nav>
@@ -396,10 +395,10 @@
             </p>
             
             <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <a href="signup.html?type=vendor" class="bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-w-48">
+                <a href="{% url 'signup' %}?type=vendor" class="bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-w-48">
                     <i class="fas fa-store mr-2"></i>I'm a Vendor
                 </a>
-                <a href="signup.html?type=supplier" class="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-w-48">
+                <a href="{% url 'signup' %}?type=supplier" class="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-w-48">
                     <i class="fas fa-truck mr-2"></i>I'm a Supplier
                 </a>
             </div>
@@ -412,7 +411,7 @@
             <div class="grid md:grid-cols-4 gap-8">
                 <!-- Company Info -->
                 <div class="md:col-span-2">
-                    <a href="/" class="text-2xl font-bold text-white hover:text-primary-400 transition-colors mb-4 inline-block">
+                    <a href="{% url 'index' %}" class="text-2xl font-bold text-white hover:text-primary-400 transition-colors mb-4 inline-block">
                         <i class="fas fa-shopping-basket mr-2"></i>BazaarBuddy
                     </a>
                     <p class="text-gray-400 mb-6 max-w-md">

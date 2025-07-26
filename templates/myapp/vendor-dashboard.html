@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Dashboard - Bazaar Buddy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-4 bg-blue-600 text-white shadow-lg">
+        <div class="text-2xl font-bold">Bazaar Buddy</div>
+        <div class="hidden md:flex space-x-6">
+            <a href="#" class="hover:text-blue-200 font-medium">Dashboard</a>
+            <a href="#suppliers" class="hover:text-blue-200">Suppliers</a>
+            <a href="#orders" class="hover:text-blue-200">Orders</a>
+            <a href="vendor-analytics.html" class="hover:text-blue-200">Analytics</a>
+        </div>
+        <div class="flex items-center space-x-4">
+          
+            <span class="hidden md:block">Welcome, Elson!</span>
+            <a href="index.html" class="hover:text-blue-200">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Stats Overview -->
+        <div class="grid md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Spent</p>
+                        <p class="text-3xl font-bold text-blue-600">₹1,24,500</p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-rupee-sign text-blue-600"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-red-600 mt-2">
+                    <i class="fas fa-arrow-down"></i> -8% from last month
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Active Orders</p>
+                        <p class="text-3xl font-bold text-green-600">12</p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-shopping-cart text-green-600"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-green-600 mt-2">
+                    <i class="fas fa-arrow-up"></i> +2 new today
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Suppliers</p>
+                        <p class="text-3xl font-bold text-purple-600">28</p>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-users text-purple-600"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-purple-600 mt-2">
+                    <i class="fas fa-arrow-up"></i> +3 this week
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Avg Savings</p>
+                        <p class="text-3xl font-bold text-orange-600">22%</p>
+                    </div>
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-percentage text-orange-600"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-orange-600 mt-2">
+                    <i class="fas fa-arrow-up"></i> +3% this month
+                </p>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Quick Actions</h3>
+            <div class="grid md:grid-cols-4 gap-4">
+                <button onclick="window.location.href='#suppliers'" class="bg-blue-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                    <i class="fas fa-search mr-2"></i>Find Suppliers
+                </button>
+                <button onclick="openOrderModal('Quick Order', 'Select Product', 0, 'kg')" class="bg-green-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                    <i class="fas fa-plus mr-2"></i>Place Order
+                </button>
+                <button onclick="window.location.href='vendor-analytics.html'" class="bg-purple-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-purple-700 transition">
+                    <i class="fas fa-chart-line mr-2"></i>View Analytics
+                </button>
+                <button class="bg-orange-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-orange-700 transition">
+                    <i class="fas fa-heart mr-2"></i>Favorites
+                </button>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Nearby Suppliers</h3>
+            <div class="h-96 bg-gray-200 rounded-lg flex items-center justify-center relative">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.1234567890123!2d-74.0059413!3d40.7127753!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQyJzQ2LjAiTiA3NMKwMDAnMjEuNCJX!5e0!3m2!1sen!2sus!4v1234567890123"
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="rounded-lg">
+                </iframe>
+                <!-- Map Controls -->
+                <div class="absolute top-4 right-4 bg-white rounded-lg shadow-md p-2">
+                    <button class="block w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm">
+                        <i class="fas fa-filter mr-2"></i>Filter by Category
+                    </button>
+                    <button class="block w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm">
+                        <i class="fas fa-sort-amount-down mr-2"></i>Sort by Distance
+                    </button>
+                    <button class="block w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm">
+                        <i class="fas fa-star mr-2"></i>Show Favorites
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Supplier Cards -->
+        <div id="suppliers" class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Available Suppliers</h3>
+                <div class="flex space-x-2">
+                    <select class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>All Categories</option>
+                        <option>Vegetables</option>
+                        <option>Fruits</option>
+                        <option>Spices</option>
+                        <option>Grains</option>
+                    </select>
+                    <select class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>Sort by Distance</option>
+                        <option>Sort by Price</option>
+                        <option>Sort by Rating</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="supplierCards">
+                <!-- Supplier cards will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div id="orders" class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Recent Orders</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full table-auto">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th class="px-4 py-3 text-left">Order ID</th>
+                            <th class="px-4 py-3 text-left">Supplier</th>
+                            <th class="px-4 py-3 text-left">Product</th>
+                            <th class="px-4 py-3 text-left">Quantity</th>
+                            <th class="px-4 py-3 text-left">Amount</th>
+                            <th class="px-4 py-3 text-left">Status</th>
+                            <th class="px-4 py-3 text-left">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTable">
+                        <!-- Orders will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div id="orderModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Place Bulk Order</h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="orderForm">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Supplier</label>
+                        <input type="text" id="modalSupplier" readonly class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Product</label>
+                        <input type="text" id="modalProduct" readonly class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Price per Unit</label>
+                        <input type="text" id="modalPrice" readonly class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+                        <input type="number" id="modalQuantity" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter quantity">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Total Amount</label>
+                        <input type="text" id="modalTotal" readonly class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Delivery Date</label>
+                        <input type="date" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="flex space-x-4">
+                        <button type="submit" class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition">
+                            Place Order
+                        </button>
+                        <button type="button" id="cancelOrder" class="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        const suppliers = [
+            {
+                id: 1,
+                name: "Fresh Farm Supplies",
+                product: "Organic Tomatoes",
+                price: 45,
+                unit: "kg",
+                stock: 200,
+                rating: 4.8,
+                distance: "2.3 km",
+                category: "Vegetables",
+                image: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcR6DIluazKD9CCW6exWzDQ21iW25I1BhnWHX4SQ7gWQmJXRzl9xAbQabmEOOKLjMw8IYF2I3BlQp6bXpyJ5acqVEOvwOH5x9eAkDi4MQYhqHQ"
+            },
+            {
+                id: 2,
+                name: "Spice World",
+                product: "Red Chili Powder",
+                price: 120,
+                unit: "kg",
+                stock: 50,
+                rating: 4.6,
+                distance: "1.8 km",
+                category: "Spices",
+                image: "https://goodness-farm.com/wp-content/uploads/2021/04/image-Red_Chilli_Karam_Podi-1590824175448.jpg"
+            },
+            {
+                id: 3,
+                name: "Green Valley",
+                product: "Fresh Onions",
+                price: 35,
+                unit: "kg",
+                stock: 150,
+                rating: 4.7,
+                distance: "3.1 km",
+                category: "Vegetables",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx1rsZxFYfJEAmnIuV9kCnmHV6IEvMdKE4AQ&s"
+            },
+            {
+                id: 4,
+                name: "Grain Masters",
+                product: "Basmati Rice",
+                price: 80,
+                unit: "kg",
+                stock: 100,
+                rating: 4.9,
+                distance: "2.7 km",
+                category: "Grains",
+                image: "https://cdn.britannica.com/27/239427-050-CCA3F926/wooden-grain-organizer.jpg"
+            },
+            {
+                id: 5,
+                name: "Golden Spices",
+                product: "Turmeric Powder",
+                price: 150,
+                unit: "kg",
+                stock: 75,
+                rating: 4.5,
+                distance: "1.5 km",
+                category: "Spices",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsxa1xwnXts4_fVr4ByzmF0RzTKMQfkLVlVA&s"
+            },
+            {
+                id: 6,
+                name: "Fruit Paradise",
+                product: "Fresh Mangoes",
+                price: 60,
+                unit: "kg",
+                stock: 120,
+                rating: 4.8,
+                distance: "2.9 km",
+                category: "Fruits",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm50q4isW2Wxcd81IohlPHoiC7llQmZbWOVg&s"
+            }
+        ];
+
+        const orders = [
+            { id: "ORD001", supplier: "Fresh Farm Supplies", product: "Organic Tomatoes", quantity: "50 kg", amount: 2250, status: "delivered" },
+            { id: "ORD002", supplier: "Spice World", product: "Red Chili Powder", quantity: "25 kg", amount: 3000, status: "shipped" },
+            { id: "ORD003", supplier: "Green Valley", product: "Fresh Onions", quantity: "30 kg", amount: 1050, status: "processing" },
+            { id: "ORD004", supplier: "Grain Masters", product: "Basmati Rice", quantity: "100 kg", amount: 8000, status: "confirmed" },
+            { id: "ORD005", supplier: "Golden Spices", product: "Turmeric Powder", quantity: "10 kg", amount: 1500, status: "delivered" }
+        ];
+
+        // Populate supplier cards
+        function populateSupplierCards() {
+            const container = document.getElementById('supplierCards');
+            container.innerHTML = suppliers.map(supplier => `
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                    <img src="${supplier.image}" alt="${supplier.product}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-lg">${supplier.name}</h4>
+                            <button class="text-red-500 hover:text-red-700">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                        <p class="text-gray-600 mb-2">${supplier.product}</p>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-2xl font-bold text-green-600">₹${supplier.price}/${supplier.unit}</span>
+                            <span class="text-sm text-gray-500">${supplier.distance}</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-600">Stock: ${supplier.stock} ${supplier.unit}</span>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <span class="ml-1 text-sm">${supplier.rating}</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="openOrderModal('${supplier.name}', '${supplier.product}', ${supplier.price}, '${supplier.unit}')" class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition">
+                                Order Now
+                            </button>
+                            <button class="bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-300 transition">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Populate orders table
+        function populateOrders() {
+            const table = document.getElementById('ordersTable');
+            table.innerHTML = orders.map(order => `
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-4 py-3 font-medium">${order.id}</td>
+                    <td class="px-4 py-3">${order.supplier}</td>
+                    <td class="px-4 py-3">${order.product}</td>
+                    <td class="px-4 py-3">${order.quantity}</td>
+                    <td class="px-4 py-3">₹${order.amount.toLocaleString()}</td>
+                    <td class="px-4 py-3">
+                        <span class="px-2 py-1 rounded-full text-xs ${getStatusColor(order.status)}">
+                            ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3">
+                        <button class="text-blue-600 hover:text-blue-800 mr-2">Track</button>
+                        <button class="text-green-600 hover:text-green-800">Reorder</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                delivered: 'bg-green-100 text-green-800',
+                shipped: 'bg-blue-100 text-blue-800',
+                processing: 'bg-yellow-100 text-yellow-800',
+                confirmed: 'bg-purple-100 text-purple-800'
+            };
+            return colors[status] || 'bg-gray-100 text-gray-800';
+        }
+
+        // Modal functions
+        function openOrderModal(supplier, product, price, unit) {
+            document.getElementById('modalSupplier').value = supplier;
+            document.getElementById('modalProduct').value = product;
+            document.getElementById('modalPrice').value = `₹${price}/${unit}`;
+            document.getElementById('orderModal').classList.remove('hidden');
+            
+            // Update total when quantity changes
+            const quantityInput = document.getElementById('modalQuantity');
+            const totalInput = document.getElementById('modalTotal');
+            
+            quantityInput.addEventListener('input', function() {
+                const quantity = parseFloat(this.value) || 0;
+                const total = quantity * price;
+                totalInput.value = `₹${total.toLocaleString()}`;
+            });
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.add('hidden');
+            document.getElementById('orderForm').reset();
+            document.getElementById('modalTotal').value = '';
+        }
+
+        // Event listeners
+        document.getElementById('closeModal').addEventListener('click', closeOrderModal);
+        document.getElementById('cancelOrder').addEventListener('click', closeOrderModal);
+
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const supplier = document.getElementById('modalSupplier').value;
+            const product = document.getElementById('modalProduct').value;
+            const quantity = document.getElementById('modalQuantity').value;
+            const total = document.getElementById('modalTotal').value;
+            
+            alert(`Order placed successfully!\nSupplier: ${supplier}\nProduct: ${product}\nQuantity: ${quantity}\nTotal: ${total}`);
+            closeOrderModal();
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            populateSupplierCards();
+            populateOrders();
+        });
+    </script>
+</body>
+</html>

@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import login
 from .models import UserProfile
-
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 def register(request):
     if request.method == 'POST':
         user_type = request.POST.get('user_type')
@@ -20,19 +21,19 @@ def register(request):
 
         if not terms:
             messages.error(request, "You must agree to the terms and conditions.")
-            return render(request, 'registration/register.html')
+            return render(request, 'user/signup.html')
 
         if password != confirm_password:
             messages.error(request, "Passwords do not match.")
-            return render(request, 'registration/register.html')
+            return render(request, 'user/signup.html')
 
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists.")
-            return render(request, 'registration/register.html')
+            return render(request, 'user/signup.html')
 
         if User.objects.filter(email=email).exists():
             messages.error(request, "Email already exists.")
-            return render(request, 'registration/register.html')
+            return render(request, 'user/signup.html')
 
        
         user = User.objects.create_user(
@@ -55,17 +56,16 @@ def register(request):
 
         login(request, user)  
         messages.success(request, "Account created successfully!")
-        return redirect('home')  
+        return redirect('index.html')  # Redirect to homepage after successful registration
 
-    return render(request, 'registration/register.html')
+    return render(request, 'user/signup.html')
 
-from django.contrib.auth import logout
-from django.shortcuts import redirect
+
 
 def logout_view(request):
     logout(request)
     messages.success(request, 'You have been logged out successfully.')
-    return redirect('login')  
+    return redirect('login.html')  
 
 from django.shortcuts import render
 

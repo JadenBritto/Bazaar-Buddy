@@ -152,16 +152,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Add parallax effect to floating elements
-window.addEventListener('scroll', function() {
-    const scrolled = window.pageYOffset;
-    const parallaxElements = document.querySelectorAll('.absolute');
-    
-    parallaxElements.forEach((element, index) => {
-        const speed = 0.5 + (index * 0.1);
-        element.style.transform = `translateY(${scrolled * speed}px)`;
+// Only run parallax effect on homepage
+if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const parallaxElements = document.querySelectorAll('.parallax-float');
+        
+        parallaxElements.forEach((element, index) => {
+            const speed = 0.5 + (index * 0.1);
+            element.style.transform = `translateY(${scrolled * speed}px)`;
+        });
     });
-});
+}
 
 // Form validation helper (for future forms)
 function validateEmail(email) {
