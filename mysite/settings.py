@@ -170,7 +170,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-GEMINI_API_KEY = "AIzaSyCo28PDVfKE8ONjWqAz5QzE_IudTd3a27U"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

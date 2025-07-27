@@ -1,9 +1,10 @@
 # views.py
 from django.shortcuts import render
 import google.generativeai as genai
+import os
 
 # Configure your Gemini API key
-genai.configure(api_key="AIzaSyCo28PDVfKE8ONjWqAz5QzE_IudTd3a27U")
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def dailyportion(request):
     recommendation = None
