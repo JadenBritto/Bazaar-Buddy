@@ -12,6 +12,14 @@
 [![GitHub watchers](https://img.shields.io/github/watchers/JadenBritto/Bazaar-Buddy?style=social)](https://github.com/JadenBritto/Bazaar-Buddy/watchers)
 [![GitHub followers](https://img.shields.io/github/followers/JadenBritto?style=social)](https://github.com/JadenBritto)
 
+Vendor Login
+Username: ashleychaiwala
+Password: chaiwala@25
+
+Supplier Login
+Username: jaden12
+Password: jaden@12
+
 ## 🌟 Features
 
 ### 🎯 **Core Functionality**
