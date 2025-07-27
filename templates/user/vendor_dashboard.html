@@ -8,14 +8,17 @@
     .card-hover {
         transition: all 0.3s ease;
     }
+
     .card-hover:hover {
         transform: translateY(-5px);
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
+
     .ai-glow {
         position: relative;
         overflow: hidden;
     }
+
     .ai-glow::before {
         content: '';
         position: absolute;
@@ -23,19 +26,344 @@
         left: -50%;
         width: 200%;
         height: 200%;
-        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
         animation: shine 3s infinite;
     }
+
     @keyframes shine {
-        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        0% {
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+
+        100% {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
+        }
     }
+
     .stat-animation {
         animation: countUp 1s ease-out;
     }
+
     @keyframes countUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Popup Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    @keyframes slideInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    @keyframes successBounce {
+        0% {
+            opacity: 0;
+            transform: scale(0.3) translateY(30px);
+        }
+
+        50% {
+            opacity: 1;
+            transform: scale(1.1) translateY(-10px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    @keyframes shake {
+
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+
+        25% {
+            transform: translateX(-5px);
+        }
+
+        75% {
+            transform: translateX(5px);
+        }
+    }
+
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideOutRight {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+
+    .success-pulse {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+    }
+
+    /* Floating Elements */
+    .floating-elements {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .floating-emoji {
+        position: absolute;
+        font-size: 20px;
+        animation: float 3s ease-in-out infinite;
+        opacity: 0.7;
+    }
+
+    .floating-emoji:nth-child(1) {
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .floating-emoji:nth-child(2) {
+        top: 60%;
+        right: 15%;
+        animation-delay: 1s;
+    }
+
+    .floating-emoji:nth-child(3) {
+        bottom: 30%;
+        left: 20%;
+        animation-delay: 2s;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+
+        33% {
+            transform: translateY(-10px) rotate(5deg);
+        }
+
+        66% {
+            transform: translateY(5px) rotate(-3deg);
+        }
+    }
+
+     /* Dark Mode Styles */
+    .dark {
+        background: #1a1a1a;
+        color: #ffffff;
+    }
+    
+    .dark .bg-white {
+        background-color: #2d2d2d !important;
+    }
+    
+    .dark .bg-gradient-to-br {
+        background: linear-gradient(to bottom right, #1a1a1a, #2d2d2d, #1a1a1a) !important;
+    }
+    
+    .dark .text-gray-900 {
+        color: #ffffff !important;
+    }
+    
+    .dark .text-gray-800 {
+        color: #e5e5e5 !important;
+    }
+    
+    .dark .text-gray-700 {
+        color: #d1d5db !important;
+    }
+    
+    .dark .text-gray-600 {
+        color: #9ca3af !important;
+    }
+    
+    .dark .text-gray-500 {
+        color: #6b7280 !important;
+    }
+    
+    .dark .border-gray-300 {
+        border-color: #4b5563 !important;
+    }
+    
+    .dark .border-gray-200 {
+        border-color: #374151 !important;
+    }
+    
+    .dark .border-gray-100 {
+        border-color: #4b5563 !important;
+    }
+    
+    .dark .bg-gray-50 {
+        background-color: #374151 !important;
+    }
+    
+    .dark .bg-gray-100 {
+        background-color: #4b5563 !important;
+    }
+    
+    .dark .bg-gray-200 {
+        background-color: #6b7280 !important;
+    }
+    
+    .dark .hover\:bg-gray-50:hover {
+        background-color: #4b5563 !important;
+    }
+    
+    .dark .hover\:bg-gray-100:hover {
+        background-color: #6b7280 !important;
+    }
+    
+    /* Dark mode navbar */
+    .dark nav {
+        background-color: #2d2d2d !important;
+        border-color: #4b5563 !important;
+    }
+    
+    /* Dark mode cards and sections */
+    .dark .rounded-xl.shadow-md {
+        background-color: #2d2d2d !important;
+        border: 1px solid #4b5563;
+    }
+    
+    /* Dark mode charts background */
+    .dark canvas {
+        background-color: #374151 !important;
+        border-radius: 8px;
+    }
+    
+    /* Dark mode inputs and selects */
+    .dark input,
+    .dark select,
+    .dark textarea {
+        background-color: #374151 !important;
+        border-color: #6b7280 !important;
+        color: #ffffff !important;
+    }
+    
+    .dark input:focus,
+    .dark select:focus,
+    .dark textarea:focus {
+        border-color: #8b5cf6 !important;
+        ring-color: #8b5cf6 !important;
+    }
+    
+    /* Dark mode buttons */
+    .dark .border-dashed {
+        border-color: #6b7280 !important;
+    }
+    
+    /* Animation for mode transition */
+    .theme-transition {
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+    }
+    
+    /* Dark mode toggle animation */
+    .icon-rotate {
+        transform: rotate(180deg);
+    }
+    
+    .icon-fade {
+        opacity: 0;
+    }
+    
+    /* Dark mode for specific components */
+    .dark .bg-blue-100 {
+        background-color: #1e3a8a !important;
+    }
+    
+    .dark .bg-green-100 {
+        background-color: #14532d !important;
+    }
+    
+    .dark .bg-yellow-100 {
+        background-color: #713f12 !important;
+    }
+    
+    .dark .bg-purple-100 {
+        background-color: #581c87 !important;
+    }
+    
+    .dark .text-blue-600 {
+        color: #60a5fa !important;
+    }
+    
+    .dark .text-green-600 {
+        color: #34d399 !important;
+    }
+    
+    .dark .text-yellow-600 {
+        color: #fbbf24 !important;
+    }
+    
+    .dark .text-purple-600 {
+        color: #a78bfa !important;
     }
 </style>
 <!-- Chart.js CDN -->
@@ -48,10 +376,10 @@
         <div class="flex justify-between items-center h-16">
             <!-- Logo and Brand -->
             <div class="flex items-center space-x-3">
-                <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" 
-                     alt="Bazaar Buddy Logo" 
-                     class="w-8 h-8">
-                <a href="{% url 'vendor_dashboard' %}" class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
+                <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" alt="Bazaar Buddy Logo"
+                    class="w-8 h-8">
+                <a href="{% url 'vendor_dashboard' %}"
+                    class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
                     Bazaar Buddy — Vendor
                 </a>
             </div>
@@ -61,9 +389,7 @@
                 <!-- User Avatar and Name -->
                 <div class="flex items-center space-x-2">
                     <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
-                        <span class="text-white text-sm font-semibold">
-                            {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:user.username.1|upper|default:"" }}
-                        </span>
+                      
                     </div>
                     <span class="font-medium text-gray-700">{{ user.first_name|default:user.username }}</span>
                     <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
@@ -72,14 +398,9 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <a href="#" 
-                   class="text-gray-700 hover:text-primary-600 font-medium transition-colors">
-                    <i class="fas fa-user-edit mr-1"></i>
-                    Profile
-                </a>
-                
-                <a href="{% url 'logout' %}" 
-                   class="text-red-600 hover:text-red-700 font-medium transition-colors">
+
+
+                <a href="{% url 'logout' %}" class="text-red-600 hover:text-red-700 font-medium transition-colors">
                     <i class="fas fa-sign-out-alt mr-1"></i>
                     Sign Out
                 </a>
@@ -95,17 +416,20 @@
     {% if messages %}
     <div class="fixed top-4 right-4 z-50 space-y-2">
         {% for message in messages %}
-            <div class="mb-2 p-4 rounded-lg shadow-lg {% if message.tags == 'success' %}bg-green-500 text-white{% elif message.tags == 'error' %}bg-red-500 text-white{% else %}bg-blue-500 text-white{% endif %} alert-message max-w-sm">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <i class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %} mr-2"></i>
-                        <span>{{ message }}</span>
-                    </div>
-                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200 transition-colors">
-                        <i class="fas fa-times"></i>
-                    </button>
+        <div
+            class="mb-2 p-4 rounded-lg shadow-lg {% if message.tags == 'success' %}bg-green-500 text-white{% elif message.tags == 'error' %}bg-red-500 text-white{% else %}bg-blue-500 text-white{% endif %} alert-message max-w-sm">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <i
+                        class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %} mr-2"></i>
+                    <span>{{ message }}</span>
                 </div>
+                <button onclick="this.parentElement.parentElement.remove()"
+                    class="ml-4 text-white hover:text-gray-200 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
+        </div>
         {% endfor %}
     </div>
     {% endif %}
@@ -123,27 +447,16 @@
                 <span class="mx-2">•</span>
                 <i class="fas fa-map-marker-alt mr-1"></i>
                 <span>{{ user.userprofile.location|default:"Location not set" }}</span>
+                <a href="{% url 'dailyportion' %}"> <button
+                        class="ml-3 inline-flex items-center px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-md shadow-md transition-all duration-200 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 border border-blue-600">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-2"></i>
+                        <span class="text-white"> AI Analysis</span>
+                    </button></a>
             </div>
         </div>
 
         <!-- AI Suggestions Section -->
-        <div class="mb-8">
-            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl p-6 text-white ai-glow">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-xl font-semibold flex items-center">
-                        <i class="fas fa-robot mr-3"></i>AI Business Insights
-                    </h3>
-                    <button onclick="getAISuggestions()" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all">
-                        <i class="fas fa-refresh mr-2"></i>Refresh
-                    </button>
-                </div>
-                <div id="aiSuggestions" class="space-y-3">
-                    <div class="bg-white bg-opacity-10 rounded-lg p-4">
-                        <p class="text-sm opacity-90">Getting personalized suggestions for your business...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -210,7 +523,7 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             <!-- Revenue Chart -->
-            <div class="bg-white rounded-xl shadow-md p-6">
+            <div class="bg-white rounded-xl shadow-md p-6" id="chartContainer">
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-semibold text-gray-900">Revenue Overview</h3>
                     <select class="text-sm border border-gray-300 rounded-lg px-3 py-1" id="revenueTimeframe">
@@ -269,9 +582,11 @@
                                 <td class="py-3 text-sm font-medium text-gray-900">#{{ order.id }}</td>
                                 <td class="py-3 text-sm text-gray-600">{{ order.supplier.name|default:"N/A" }}</td>
                                 <td class="py-3 text-sm text-gray-600">{{ order.items.count|default:"0" }} items</td>
-                                <td class="py-3 text-sm font-medium text-gray-900">₹{{ order.total_amount|default:"0" }}</td>
+                                <td class="py-3 text-sm font-medium text-gray-900">₹{{ order.total_amount|default:"0" }}
+                                </td>
                                 <td class="py-3">
-                                    <span class="px-2 py-1 text-xs rounded-full {% if order.status == 'completed' %}bg-green-100 text-green-800{% elif order.status == 'pending' %}bg-yellow-100 text-yellow-800{% else %}bg-red-100 text-red-800{% endif %}">
+                                    <span
+                                        class="px-2 py-1 text-xs rounded-full {% if order.status == 'completed' %}bg-green-100 text-green-800{% elif order.status == 'pending' %}bg-yellow-100 text-yellow-800{% else %}bg-red-100 text-red-800{% endif %}">
                                         {{ order.get_status_display|default:order.status|capfirst }}
                                     </span>
                                 </td>
@@ -298,7 +613,8 @@
                 <div class="space-y-4" id="topSuppliers">
                     {% for supplier in top_suppliers %}
                     <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
-                        <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                        <div
+                            class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
                             {{ forloop.counter }}
                         </div>
                         <div class="flex-1">
@@ -306,15 +622,15 @@
                             <p class="text-xs text-gray-500">{{ supplier.order_count|default:"0" }} orders</p>
                         </div>
                         <div class="text-right">
-                            <p class="text-sm font-medium text-gray-900">₹{{ supplier.total_amount|default:"0"|floatformat:0 }}</p>
+                            <p class="text-sm font-medium text-gray-900">₹{{
+                                supplier.total_amount|default:"0"|floatformat:0 }}</p>
                             <div class="flex text-yellow-400 text-xs">
                                 {% for i in "12345"|make_list %}
-                                    {% if forloop.counter <= supplier.rating|default:4 %}
-                                        <i class="fas fa-star"></i>
+                                {% if forloop.counter <= supplier.rating|default:4 %} <i class="fas fa-star"></i>
                                     {% else %}
-                                        <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
                                     {% endif %}
-                                {% endfor %}
+                                    {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -332,21 +648,144 @@
         <div class="mt-8 bg-white rounded-xl shadow-md p-6">
             <h3 class="text-lg font-semibold text-gray-900 mb-6">Quick Actions</h3>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <button onclick="navigateToPlaceOrder()" class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition-all">
+                <button onclick="navigateToPlaceOrder()"
+                    class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition-all">
                     <i class="fas fa-plus-circle text-2xl text-indigo-600 mb-2"></i>
                     <span class="text-sm font-medium text-gray-700">Place Order</span>
                 </button>
-                <button onclick="navigateToFindSuppliers()" class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-green-500 hover:bg-green-50 transition-all">
-                    <i class="fas fa-search text-2xl text-green-600 mb-2"></i>
-                    <span class="text-sm font-medium text-gray-700">Find Suppliers</span>
+                <button onclick="toggleSuppliersMap()" id="findSuppliersBtn"
+                    class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-green-500 hover:bg-green-50 transition-all">
+                    <i class="fas fa-search text-2xl text-green-600 mb-2" id="findSuppliersIcon"></i>
+                    <span class="text-sm font-medium text-gray-700" id="findSuppliersText">Find Suppliers</span>
                 </button>
-                <button onclick="navigateToAnalytics()" class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all">
+
+               <button onclick="navigateToAnalytics()"
+                    class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-yellow-500 hover:bg-yellow-50 transition-all">
                     <i class="fas fa-chart-line text-2xl text-yellow-600 mb-2"></i>
-                    <span class="text-sm font-medium text-gray-700">View Analytics</span>
+                   <a href="#chartContainer">  <span class="text-sm font-medium text-gray-700">View Analytics</span></a>
                 </button>
-                <button onclick="navigateToSettings()" class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all">
-                    <i class="fas fa-cog text-2xl text-purple-600 mb-2"></i>
-                    <span class="text-sm font-medium text-gray-700">Settings</span>
+                <button onclick="toggleDarkMode()" id="darkModeToggle" class="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all">
+        <div class="relative w-8 h-8 mb-2">
+            <!-- Sun Icon (Light Mode) -->
+            <i id="sunIcon" class="fas fa-sun text-2xl text-yellow-500 absolute inset-0 transition-all duration-300 transform"></i>
+            <!-- Moon Icon (Dark Mode) -->
+            <i id="moonIcon" class="fas fa-moon text-2xl text-purple-600 absolute inset-0 transition-all duration-300 transform opacity-0 rotate-180"></i>
+        </div>
+        <span class="text-sm font-medium text-gray-700" id="darkModeText">Light Mode</span>
+    </button>
+</div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Suppliers Map Section (Initially Hidden) -->
+<div id="suppliersMapSection" class="mt-8 bg-white rounded-xl shadow-md p-6 hidden">
+    <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center">
+            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                <i class="fas fa-map-marker-alt text-white"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold text-gray-800">Nearby Suppliers</h3>
+                <p class="text-sm text-gray-600">Find suppliers in your area</p>
+            </div>
+        </div>
+        <button onclick="toggleSuppliersMap()" class="text-gray-500 hover:text-gray-700 transition-colors">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+    </div>
+    
+    <!-- Search and Filter Bar -->
+    
+    
+    <!-- Map Container -->
+    <div class="h-96 bg-gray-200 rounded-lg flex items-center justify-center relative overflow-hidden">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.1234567890123!2d-74.0059413!3d40.7127753!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQyJzQ2LjAiTiA3NMKwMDAnMjEuNCJX!5e0!3m2!1sen!2sus!4v1234567890123"
+            width="100%" 
+            height="100%" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            class="rounded-lg">
+        </iframe>
+        
+        <!-- Map Controls Overlay -->
+  
+    </div>
+    
+    <!-- Suppliers List -->
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-2">
+                <h4 class="font-semibold text-gray-900">Fresh Veggies Co.</h4>
+                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">2.3 km</span>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">Specializes in organic vegetables and seasonal produce</p>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="flex text-yellow-400 text-sm mr-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <span class="text-sm text-gray-600">(4.8)</span>
+                </div>
+                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition-colors">
+                    Contact
+                </button>
+            </div>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-2">
+                <h4 class="font-semibold text-gray-900">Spice Masters</h4>
+                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">3.7 km</span>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">Premium spices and herbs from local farms</p>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="flex text-yellow-400 text-sm mr-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <span class="text-sm text-gray-600">(4.2)</span>
+                </div>
+                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition-colors">
+                    Contact
+                </button>
+            </div>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-2">
+                <h4 class="font-semibold text-gray-900">Grain Suppliers Ltd.</h4>
+                <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">1.8 km</span>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">Rice, wheat, and other grains in bulk quantities</p>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="flex text-yellow-400 text-sm mr-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <span class="text-sm text-gray-600">(4.9)</span>
+                </div>
+                <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition-colors">
+                    Contact
                 </button>
             </div>
         </div>
@@ -354,7 +793,31 @@
 </div>
 
 <script>
-    // Sample data - replace with Django context variables
+    let revenueChart, ordersChart;
+
+    // Sample data for different timeframes
+    const chartData = {
+        7: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            revenue: [3200, 4100, 3800, 5200, 4400, 6100, 5800],
+            totalOrders: [12, 15, 18, 22, 19, 25, 23],
+            completedOrders: [10, 13, 16, 20, 17, 23, 21]
+        },
+        30: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+            revenue: [18500, 22300, 19800, 24200],
+            totalOrders: [89, 112, 95, 118],
+            completedOrders: [78, 98, 87, 102]
+        },
+        90: {
+            labels: ['Month 1', 'Month 2', 'Month 3'],
+            revenue: [65000, 78000, 82000],
+            totalOrders: [320, 385, 410],
+            completedOrders: [295, 352, 378]
+        }
+    };
+
+    // Dashboard sample data
     const sampleData = {
         totalOrders: 156,
         totalRevenue: 45000,
@@ -373,9 +836,6 @@
         ]
     };
 
-    // Store chart instances
-    let revenueChart, ordersChart;
-
     // Initialize Charts
     function initCharts() {
         // Revenue Chart
@@ -383,10 +843,10 @@
         revenueChart = new Chart(revenueCtx, {
             type: 'line',
             data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                labels: chartData[7].labels,
                 datasets: [{
                     label: 'Revenue (₹)',
-                    data: [3200, 4100, 3800, 5200, 4400, 6100, 5800],
+                    data: chartData[7].revenue,
                     borderColor: '#6366f1',
                     backgroundColor: 'rgba(99, 102, 241, 0.1)',
                     tension: 0.4,
@@ -414,7 +874,7 @@
                         cornerRadius: 8,
                         displayColors: false,
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 return 'Revenue: ₹' + context.parsed.y.toLocaleString();
                             }
                         }
@@ -427,7 +887,7 @@
                             color: 'rgba(0, 0, 0, 0.05)'
                         },
                         ticks: {
-                            callback: function(value) {
+                            callback: function (value) {
                                 return '₹' + value.toLocaleString();
                             }
                         }
@@ -441,6 +901,10 @@
                 interaction: {
                     intersect: false,
                     mode: 'index'
+                },
+                animation: {
+                    duration: 1000,
+                    easing: 'easeInOutQuart'
                 }
             }
         });
@@ -450,16 +914,16 @@
         ordersChart = new Chart(ordersCtx, {
             type: 'bar',
             data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                labels: chartData[7].labels,
                 datasets: [{
                     label: 'Total Orders',
-                    data: [12, 15, 18, 22, 19, 25, 23],
+                    data: chartData[7].totalOrders,
                     backgroundColor: '#6366f1',
                     borderRadius: 4,
                     borderSkipped: false,
                 }, {
                     label: 'Completed Orders',
-                    data: [10, 13, 16, 20, 17, 23, 21],
+                    data: chartData[7].completedOrders,
                     backgroundColor: '#10b981',
                     borderRadius: 4,
                     borderSkipped: false,
@@ -495,114 +959,87 @@
                 interaction: {
                     intersect: false,
                     mode: 'index'
+                },
+                animation: {
+                    duration: 1000,
+                    easing: 'easeInOutQuart'
                 }
             }
         });
     }
 
-    // AI Suggestions using Gemini API
-    async function getAISuggestions() {
-        const suggestionsDiv = document.getElementById('aiSuggestions');
-        suggestionsDiv.innerHTML = '<div class="bg-white bg-opacity-10 rounded-lg p-4"><p class="text-sm opacity-90"><i class="fas fa-spinner fa-spin mr-2"></i>Getting fresh insights from AI...</p></div>';
+    // Update charts based on timeframe
+    function updateCharts(timeframe) {
+        const data = chartData[timeframe];
 
-        try {
-            // Your Gemini API key - replace with actual key
-            const API_KEY = 'YOUR_GEMINI_API_KEY_HERE'; // Replace with your actual API key
-            
-            const vendorData = {
-                totalOrders: sampleData.totalOrders,
-                revenue: sampleData.totalRevenue,
-                suppliers: sampleData.activeSuppliers,
-                rating: sampleData.rating,
-                businessType: 'Street Food Vendor',
-                userName: '{{ user.first_name|default:user.username }}',
-                location: '{{ user.userprofile.location|default:"Not specified" }}'
-            };
-
-            const prompt = `You are a business consultant for street food vendors in India. Analyze this vendor's performance:
-
-Business Metrics:
-- Total Orders this month: ${vendorData.totalOrders}
-- Monthly Revenue: ₹${vendorData.revenue}
-- Active Suppliers: ${vendorData.suppliers}
-- Customer Rating: ${vendorData.rating}/5.0
-- Business Type: ${vendorData.businessType}
-- Location: ${vendorData.location}
-
-Provide exactly 3 actionable business recommendations. Each recommendation should:
-1. Be specific and implementable
-2. Include expected impact/benefit
-3. Be relevant to Indian street food market
-4. Be under 60 words each
-
-Format each suggestion as a separate line starting with an emoji.`;
-
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{
-                            text: prompt
-                        }]
-                    }],
-                    generationConfig: {
-                        temperature: 0.7,
-                        topK: 40,
-                        topP: 0.95,
-                        maxOutputTokens: 1024,
-                    }
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`API Error: ${response.status}`);
-            }
-
-            const data = await response.json();
-            
-            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                const aiText = data.candidates[0].content.parts[0].text;
-                const suggestions = aiText.split('\n').filter(s => s.trim() && s.length > 10);
-                displaySuggestions(suggestions);
-            } else {
-                throw new Error('Invalid API response structure');
-            }
-        } catch (error) {
-            console.error('Gemini API Error:', error);
-            showFallbackSuggestions();
-        }
-    }
-
-    function showFallbackSuggestions() {
-        const suggestions = [
-            "🍽️ Consider expanding your menu with seasonal ingredients to attract more customers and increase average order value by 15-20%",
-            "📱 Implement a digital ordering system to reduce wait times and improve customer satisfaction, potentially boosting repeat customers by 25%",
-            "🤝 Partner with 2-3 reliable local suppliers to ensure consistent ingredient quality and reduce supply chain disruptions during peak seasons"
-        ];
-        displaySuggestions(suggestions);
-    }
-
-    function displaySuggestions(suggestions) {
-        const suggestionsDiv = document.getElementById('aiSuggestions');
-        
-        if (suggestions.length === 0) {
-            showFallbackSuggestions();
-            return;
+        if (revenueChart) {
+            revenueChart.data.labels = data.labels;
+            revenueChart.data.datasets[0].data = data.revenue;
+            revenueChart.update('active');
         }
 
-        suggestionsDiv.innerHTML = suggestions.slice(0, 3).map((suggestion, index) => 
-            `<div class="bg-white bg-opacity-10 rounded-lg p-4 hover:bg-opacity-20 transition-all cursor-pointer mb-3 last:mb-0">
-                <div class="flex items-start space-x-3">
-                    <div class="w-6 h-6 bg-white bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span class="text-xs font-bold">${index + 1}</span>
-                    </div>
-                    <p class="text-sm leading-relaxed">${suggestion.trim()}</p>
-                </div>
-            </div>`
-        ).join('');
+        if (ordersChart) {
+            ordersChart.data.labels = data.labels;
+            ordersChart.data.datasets[0].data = data.totalOrders;
+            ordersChart.data.datasets[1].data = data.completedOrders;
+            ordersChart.update('active');
+        }
+
+        // Add loading effect
+        showChartLoading();
+        setTimeout(() => {
+            hideChartLoading();
+        }, 800);
+    }
+
+    // Show loading effect on charts
+    function showChartLoading() {
+        const chartContainers = document.querySelectorAll('.h-64.relative');
+        chartContainers.forEach(container => {
+            container.style.opacity = '0.6';
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'absolute inset-0 flex items-center justify-center bg-white bg-opacity-80';
+            loadingDiv.innerHTML = '<i class="fas fa-spinner fa-spin text-primary-600 text-xl"></i>';
+            loadingDiv.id = 'chart-loading';
+            container.appendChild(loadingDiv);
+        });
+    }
+
+    // Hide loading effect
+    function hideChartLoading() {
+        const chartContainers = document.querySelectorAll('.h-64.relative');
+        chartContainers.forEach(container => {
+            container.style.opacity = '1';
+            const loadingDiv = container.querySelector('#chart-loading');
+            if (loadingDiv) {
+                loadingDiv.remove();
+            }
+        });
+    }
+
+    // Animate numbers
+    function animateNumber(elementId, targetValue, prefix = '') {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+
+        const startValue = 0;
+        const duration = 1000;
+        const startTime = Date.now();
+
+        function update() {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            const currentValue = Math.floor(startValue + (targetValue - startValue) * easeOutQuart);
+
+            element.textContent = prefix + currentValue.toLocaleString();
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+
+        update();
     }
 
     // Load sample data for demo
@@ -612,13 +1049,13 @@ Format each suggestion as a separate line starting with an emoji.`;
         animateNumber('totalRevenue', sampleData.totalRevenue, '₹');
         animateNumber('activeSuppliers', sampleData.activeSuppliers);
         animateNumber('newSuppliers', sampleData.newSuppliers);
-        
+
         // Update rating
         document.getElementById('avgRating').textContent = sampleData.rating;
 
         // Load sample recent orders for demo
         const tableBody = document.getElementById('recentOrdersTable');
-        if (tableBody && tableBody.children.length === 0) {
+        if (tableBody && tableBody.children.length === 1 && tableBody.innerHTML.includes('No recent orders')) {
             tableBody.innerHTML = sampleData.recentOrders.map(order => `
                 <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                     <td class="py-3 text-sm font-medium text-gray-900">#${order.id}</td>
@@ -636,7 +1073,7 @@ Format each suggestion as a separate line starting with an emoji.`;
 
         // Load sample top suppliers for demo
         const suppliersDiv = document.getElementById('topSuppliers');
-        if (suppliersDiv && !suppliersDiv.innerHTML.includes('{{') && suppliersDiv.children.length === 0) {
+        if (suppliersDiv && suppliersDiv.innerHTML.includes('No suppliers found')) {
             suppliersDiv.innerHTML = sampleData.topSuppliers.map((supplier, index) => `
                 <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
                     <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
@@ -657,60 +1094,556 @@ Format each suggestion as a separate line starting with an emoji.`;
         }
     }
 
-    // Animate numbers
-    function animateNumber(elementId, targetValue, prefix = '') {
-        const element = document.getElementById(elementId);
-        if (!element) return;
-        
-        const startValue = 0;
-        const duration = 1000;
-        const startTime = Date.now();
-        
-        function update() {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-            const currentValue = Math.floor(startValue + (targetValue - startValue) * easeOutQuart);
-            
-            element.textContent = prefix + currentValue.toLocaleString();
-            
-            if (progress < 1) {
-                requestAnimationFrame(update);
-            }
-        }
-        
-        update();
+    // Quick Actions Navigation Functions
+    function navigateToPlaceOrder() {
+        console.log('Navigate to Place Order');
+        // Add your navigation logic here
     }
 
+    function navigateToFindSuppliers() {
+        console.log('Navigate to Find Suppliers');
+        // Add your navigation logic here
+    }
 
+    function navigateToAnalytics() {
+        console.log('Navigate to Analytics');
+        // Add your navigation logic here
+    }
 
-    // Chart timeframe change handler
-    document.addEventListener('DOMContentLoaded', function() {
+    function navigateToSettings() {
+        console.log('Navigate to Settings');
+        // Add your navigation logic here
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize charts
+        initCharts();
+
+        // Load sample data
+        loadSampleData();
+
+        // Chart timeframe change handler - THIS IS THE KEY FIX
         const timeframeSelect = document.getElementById('revenueTimeframe');
         if (timeframeSelect) {
-            timeframeSelect.addEventListener('change', function() {
-                // Update chart data based on selected timeframe
-                console.log('Timeframe changed to:', this.value);
-                // Implement chart data update logic here
+            timeframeSelect.addEventListener('change', function () {
+                const selectedTimeframe = parseInt(this.value);
+                console.log('Timeframe changed to:', selectedTimeframe);
+                updateCharts(selectedTimeframe);
+
+                // Update the select styling to show it's active
+                this.style.background = '#f3f4f6';
+                setTimeout(() => {
+                    this.style.background = '';
+                }, 300);
             });
         }
+
+        // Auto-dismiss messages
+        setTimeout(function () {
+            const alerts = document.querySelectorAll('.alert-message');
+            alerts.forEach(alert => {
+                alert.style.transition = 'opacity 0.5s';
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 5000);
     });
 
-    // Auto-dismiss messages
-    setTimeout(function() {
-        const alerts = document.querySelectorAll('.alert-message');
-        alerts.forEach(alert => {
-            alert.style.transition = 'opacity 0.5s';
-            alert.style.opacity = '0';
-            setTimeout(() => alert.remove(), 500);
+
+    function navigateToPlaceOrder() {
+        // Show order form popup first
+        showOrderFormPopup();
+    }
+
+    function showOrderFormPopup() {
+        // Create overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4';
+        overlay.style.animation = 'fadeIn 0.3s ease-out';
+
+        // Create popup container
+        const popup = document.createElement('div');
+        popup.className = 'bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all duration-300';
+        popup.style.animation = 'slideInScale 0.4s ease-out';
+
+        popup.innerHTML = `
+        <div class="p-6">
+            <!-- Header -->
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shopping-cart text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Quick Order</h3>
+                <p class="text-gray-600">Place your order in seconds</p>
+            </div>
+            
+            <!-- Order Form -->
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Product</label>
+                    <select id="productSelect" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Select a product...</option>
+                        <option value="vegetables">Fresh Vegetables</option>
+                        <option value="fruits">Seasonal Fruits</option>
+                        <option value="spices">Spices & Herbs</option>
+                        <option value="grains">Rice & Grains</option>
+                        <option value="dairy">Dairy Products</option>
+                    </select>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Quantity (kg)</label>
+                        <input type="number" id="quantityInput" min="1" max="100" value="5" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+                        <select id="prioritySelect" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="normal">Normal</option>
+                            <option value="urgent">Urgent</option>
+                            <option value="asap">ASAP</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Special Notes (Optional)</label>
+                    <textarea id="notesInput" rows="3" placeholder="Any special requirements..."
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"></textarea>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex space-x-3 mt-6">
+                <button onclick="closeOrderPopup()" 
+                        class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium">
+                    Cancel
+                </button>
+                <button onclick="processOrder()" 
+                        class="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                    <i class="fas fa-rocket mr-2"></i>
+                    Place Order
+                </button>
+            </div>
+        </div>
+    `;
+
+        overlay.appendChild(popup);
+        document.body.appendChild(overlay);
+
+        // Close on overlay click
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                closeOrderPopup();
+            }
         });
-    }, 5000);
+    }
 
-    // Initialize everything when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        initCharts();
-        loadSampleData();
-        getAISuggestions();
+    function processOrder() {
+        const product = document.getElementById('productSelect').value;
+        const quantity = document.getElementById('quantityInput').value;
+        const priority = document.getElementById('prioritySelect').value;
+        const notes = document.getElementById('notesInput').value;
+
+        if (!product) {
+            // Shake animation for empty product
+            const productSelect = document.getElementById('productSelect');
+            productSelect.style.animation = 'shake 0.5s ease-in-out';
+            productSelect.focus();
+            setTimeout(() => {
+                productSelect.style.animation = '';
+            }, 500);
+            return;
+        }
+
+        // Close the order form
+        closeOrderPopup();
+
+        // Show success animation after a brief delay
+        setTimeout(() => {
+            showOrderSuccessPopup(product, quantity, priority);
+        }, 300);
+    }
+
+    function showOrderSuccessPopup(product, quantity, priority) {
+        // Create overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4';
+        overlay.style.animation = 'fadeIn 0.3s ease-out';
+
+        // Create success popup
+        const popup = document.createElement('div');
+        popup.className = 'bg-white rounded-2xl shadow-2xl max-w-md w-full text-center p-8 transform';
+        popup.style.animation = 'successBounce 0.6s ease-out';
+
+        // Generate random order ID
+        const orderId = 'ORD-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+
+        popup.innerHTML = `
+        <!-- Success Animation -->
+        <div class="relative mb-6">
+            <div class="w-20 h-20 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4 success-pulse">
+                <i class="fas fa-check text-white text-3xl"></i>
+            </div>
+            <div class="absolute inset-0 w-20 h-20 mx-auto">
+                <div class="w-full h-full border-4 border-green-200 rounded-full animate-ping"></div>
+            </div>
+        </div>
+        
+        <!-- Success Message -->
+        <div class="mb-6">
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">🎉 Order Placed Successfully!</h3>
+            <p class="text-gray-600 mb-4">Your order has been sent to our suppliers</p>
+            
+            <!-- Order Details Card -->
+            <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 mb-4 border border-blue-100">
+                <div class="text-left space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-gray-600">Order ID:</span>
+                        <span class="text-sm font-bold text-blue-600">${orderId}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-gray-600">Product:</span>
+                        <span class="text-sm font-semibold text-gray-900">${product.charAt(0).toUpperCase() + product.slice(1)}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-gray-600">Quantity:</span>
+                        <span class="text-sm font-semibold text-gray-900">${quantity} kg</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-gray-600">Priority:</span>
+                        <span class="text-xs px-2 py-1 rounded-full ${getPriorityClass(priority)}">${priority.toUpperCase()}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Estimated Time -->
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
+                <div class="flex items-center justify-center text-yellow-800">
+                    <i class="fas fa-clock mr-2"></i>
+                    <span class="text-sm font-medium">Estimated delivery: ${getEstimatedTime(priority)}</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="space-y-3">
+            <button onclick="trackOrder('${orderId}')" 
+                    class="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                <i class="fas fa-search mr-2"></i>
+                Track This Order
+            </button>
+            <button onclick="closeSuccessPopup()" 
+                    class="w-full px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium">
+                Continue Shopping
+            </button>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="floating-elements">
+            <div class="floating-emoji">🚚</div>
+            <div class="floating-emoji">📦</div>
+            <div class="floating-emoji">✨</div>
+        </div>
+    `;
+
+        overlay.appendChild(popup);
+        document.body.appendChild(overlay);
+
+        // Auto close after 8 seconds
+        setTimeout(() => {
+            closeSuccessPopup();
+        }, 8000);
+
+        // Close on overlay click
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                closeSuccessPopup();
+            }
+        });
+    }
+
+    // Helper Functions
+    function getPriorityClass(priority) {
+        const classes = {
+            'normal': 'bg-blue-100 text-blue-800',
+            'urgent': 'bg-orange-100 text-orange-800',
+            'asap': 'bg-red-100 text-red-800'
+        };
+        return classes[priority] || 'bg-gray-100 text-gray-800';
+    }
+
+    function getEstimatedTime(priority) {
+        const times = {
+            'normal': '2-4 hours',
+            'urgent': '1-2 hours',
+            'asap': '30-60 minutes'
+        };
+        return times[priority] || '2-4 hours';
+    }
+
+    function trackOrder(orderId) {
+        closeSuccessPopup();
+        // Add your order tracking logic here
+        console.log('Tracking order:', orderId);
+
+        // Show tracking popup (optional)
+        showTrackingNotification(orderId);
+    }
+
+    function showTrackingNotification(orderId) {
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-4 right-4 bg-blue-600 text-white px-6 py-4 rounded-lg shadow-lg z-50 max-w-sm';
+        notification.style.animation = 'slideInRight 0.3s ease-out';
+
+        notification.innerHTML = `
+        <div class="flex items-center">
+            <i class="fas fa-info-circle mr-3"></i>
+            <div>
+                <p class="font-semibold">Order Tracking</p>
+                <p class="text-sm opacity-90">Order ${orderId} is being tracked</p>
+            </div>
+        </div>
+    `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.3s ease-in';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    function closeOrderPopup() {
+        const overlay = document.querySelector('.fixed.inset-0');
+        if (overlay) {
+            overlay.style.animation = 'fadeOut 0.3s ease-in';
+            setTimeout(() => overlay.remove(), 300);
+        }
+    }
+
+    function closeSuccessPopup() {
+        const overlay = document.querySelector('.fixed.inset-0');
+        if (overlay) {
+            overlay.style.animation = 'fadeOut 0.3s ease-in';
+            setTimeout(() => overlay.remove(), 300);
+        }
+    }
+
+    // Add these functions to your existing script section
+
+// Toggle Suppliers Map Function
+function toggleSuppliersMap() {
+    const mapSection = document.getElementById('suppliersMapSection');
+    const findSuppliersBtn = document.getElementById('findSuppliersBtn');
+    const findSuppliersIcon = document.getElementById('findSuppliersIcon');
+    const findSuppliersText = document.getElementById('findSuppliersText');
+    
+    if (mapSection.classList.contains('hidden')) {
+        // Show the map
+        mapSection.classList.remove('hidden');
+        mapSection.style.animation = 'slideDown 0.5s ease-out';
+        
+        // Update button appearance
+        findSuppliersBtn.classList.remove('border-gray-300', 'hover:border-green-500', 'hover:bg-green-50');
+        findSuppliersBtn.classList.add('border-green-500', 'bg-green-50');
+        findSuppliersIcon.classList.remove('fa-search');
+        findSuppliersIcon.classList.add('fa-map-marked-alt');
+        findSuppliersText.textContent = 'Hide Map';
+        
+        // Scroll to map section
+        setTimeout(() => {
+            mapSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 200);
+        
+    } else {
+        // Hide the map
+        mapSection.style.animation = 'slideUp 0.5s ease-in';
+        setTimeout(() => {
+            mapSection.classList.add('hidden');
+        }, 500);
+        
+        // Reset button appearance
+        findSuppliersBtn.classList.remove('border-green-500', 'bg-green-50');
+        findSuppliersBtn.classList.add('border-gray-300', 'hover:border-green-500', 'hover:bg-green-50');
+        findSuppliersIcon.classList.remove('fa-map-marked-alt');
+        findSuppliersIcon.classList.add('fa-search');
+        findSuppliersText.textContent = 'Find Suppliers';
+    }
+}
+
+// Map control functions
+function filterByCategory() {
+    console.log('Filtering by category...');
+    // Add your filter logic here
+}
+
+function sortByDistance() {
+    console.log('Sorting by distance...');
+    // Add your sort logic here
+}
+
+function showFavorites() {
+    console.log('Showing favorites...');
+    // Add your favorites logic here
+}
+
+// Remove or update the old navigateToFindSuppliers function
+function navigateToFindSuppliers() {
+    toggleSuppliersMap();
+}
+
+// Add this to your existing script section
+
+// Dark Mode Toggle Functionality
+function toggleDarkMode() {
+    const body = document.body;
+    const html = document.documentElement;
+    const sunIcon = document.getElementById('sunIcon');
+    const moonIcon = document.getElementById('moonIcon');
+    const darkModeText = document.getElementById('darkModeText');
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    
+    // Add transition class for smooth animation
+    body.classList.add('theme-transition');
+    html.classList.add('theme-transition');
+    
+    // Toggle dark class
+    const isDark = html.classList.toggle('dark');
+    
+    // Animate icons
+    if (isDark) {
+        // Switch to dark mode
+        sunIcon.classList.add('icon-fade', 'icon-rotate');
+        moonIcon.classList.remove('icon-fade', 'icon-rotate');
+        moonIcon.classList.add('opacity-100');
+        sunIcon.classList.remove('opacity-100');
+        darkModeText.textContent = 'Dark Mode';
+        
+        // Update button hover colors for dark mode
+        darkModeToggle.classList.remove('hover:border-purple-500', 'hover:bg-purple-50');
+        darkModeToggle.classList.add('hover:border-blue-500', 'hover:bg-blue-900');
+        
+    } else {
+        // Switch to light mode
+        moonIcon.classList.add('icon-fade', 'icon-rotate');
+        sunIcon.classList.remove('icon-fade', 'icon-rotate');
+        sunIcon.classList.add('opacity-100');
+        moonIcon.classList.remove('opacity-100');
+        darkModeText.textContent = 'Light Mode';
+        
+        // Update button hover colors for light mode
+        darkModeToggle.classList.remove('hover:border-blue-500', 'hover:bg-blue-900');
+        darkModeToggle.classList.add('hover:border-purple-500', 'hover:bg-purple-50');
+    }
+    
+    // Save preference to localStorage
+    localStorage.setItem('darkMode', isDark);
+    
+    // Show notification
+    showModeNotification(isDark);
+    
+    // Update charts colors if they exist
+    updateChartsForDarkMode(isDark);
+    
+    // Remove transition class after animation
+    setTimeout(() => {
+        body.classList.remove('theme-transition');
+        html.classList.remove('theme-transition');
+    }, 300);
+}
+
+// Show mode change notification
+function showModeNotification(isDark) {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg transition-all duration-300 ${
+        isDark ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'
+    }`;
+    
+    notification.innerHTML = `
+        <div class="flex items-center space-x-2">
+            <i class="fas ${isDark ? 'fa-moon' : 'fa-sun'} text-${isDark ? 'blue' : 'yellow'}-500"></i>
+            <span class="font-medium">${isDark ? 'Dark' : 'Light'} mode activated</span>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(-50%) translateY(0)';
+    }, 100);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.style.transform = 'translateX(-50%) translateY(-100px)';
+        notification.style.opacity = '0';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// Update chart colors for dark mode
+function updateChartsForDarkMode(isDark) {
+    if (revenueChart) {
+        const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
+        const textColor = isDark ? '#ffffff' : '#374151';
+        
+        revenueChart.options.scales.y.grid.color = gridColor;
+        revenueChart.options.scales.y.ticks.color = textColor;
+        revenueChart.options.scales.x.ticks.color = textColor;
+        revenueChart.update();
+    }
+    
+    if (ordersChart) {
+        const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
+        const textColor = isDark ? '#ffffff' : '#374151';
+        
+        ordersChart.options.scales.y.grid.color = gridColor;
+        ordersChart.options.scales.y.ticks.color = textColor;
+        ordersChart.options.scales.x.ticks.color = textColor;
+        ordersChart.update();
+    }
+}
+
+// Load saved dark mode preference on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if user has a saved preference
+    const savedDarkMode = localStorage.getItem('darkMode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Apply dark mode if saved preference is true or user prefers dark and no saved preference
+    if (savedDarkMode === 'true' || (savedDarkMode === null && prefersDark)) {
+        document.documentElement.classList.add('dark');
+        
+        // Update toggle button state
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+        const darkModeText = document.getElementById('darkModeText');
+        
+        if (sunIcon && moonIcon && darkModeText) {
+            sunIcon.classList.add('icon-fade', 'icon-rotate');
+            moonIcon.classList.remove('icon-fade', 'icon-rotate');
+            moonIcon.classList.add('opacity-100');
+            sunIcon.classList.remove('opacity-100');
+            darkModeText.textContent = 'Dark Mode';
+        }
+    }
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (localStorage.getItem('darkMode') === null) {
+            if (e.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
     });
+});
+
+
 </script>
+
 {% endblock %}
