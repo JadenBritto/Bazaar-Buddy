@@ -84,7 +84,7 @@ Visit `http://127.0.0.1:8000` to see the application in action.
 | **Deployment** | Render, Gunicorn, WhiteNoise |
 
 ## 📁 Project Structure
-
+<pre>
 bazaar-buddy/
 ├── mysite/ # Django project settings
 │ ├── settings.py
@@ -101,7 +101,7 @@ bazaar-buddy/
 ├── static/ # CSS, JS, images
 ├── requirements.txt
 └── manage.py
-
+</pre>
 
 
 ## 🔧 Configuration
